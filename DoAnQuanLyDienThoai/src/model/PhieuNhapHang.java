@@ -1,35 +1,72 @@
-package model;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-public class PhieuNhapHang implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String maPNH, maNCC, maNV;
+public class PhieuNhapHang {
+    private String maPNH;
+    private String maNCC;
+    private String maNV;
     private LocalDate ngayLap;
-    private List<CTPhieuNhapHang> chiTiet = new ArrayList<CTPhieuNhapHang>();
-
-    public PhieuNhapHang(String maPNH, String maNCC, String maNV, LocalDate ngayLap) {
-        this.maPNH = maPNH; this.maNCC = maNCC; this.maNV = maNV; this.ngayLap = ngayLap;
+    private DSCTPhieuNhapHang chiTiet;
+    public PhieuNhapHang(){
+        maPNH="";
+        maNCC="";
+        maNV="";
+        ngayLap=null;
+        chiTiet=new DSCTPhieuNhapHang();
     }
-    public String getMaPNH() { return maPNH; }
-    public String getMaNCC() { return maNCC; }
-    public String getMaNV() { return maNV; }
-    public LocalDate getNgayLap() { return ngayLap; }
-    public List<CTPhieuNhapHang> getChiTiet() { return chiTiet; }
-    public void themCT(CTPhieuNhapHang ct) { chiTiet.add(ct); }
-    public double getTongTien() {
-        double t = 0;
-        for (CTPhieuNhapHang ct : chiTiet) t += ct.getThanhTien();
-        return t;
+    public PhieuNhapHang(String maPNH,String maNCC,String maNV,LocalDate ngayLap,DSCTPhieuNhapHang ct){
+        this.maPNH=maPNH;
+        this.maNCC=maNCC;
+        this.maNV=maNV;
+        this.ngayLap=ngayLap;
+        chiTiet= new DSCTPhieuNhapHang(0);
+        for(int i=0;i<ct.getN();i++){
+            chiTiet.them(ct.getChiTiet()[i]);
+        }
+    }
+    public PhieuNhapHang(PhieuNhapHang A){
+        maPNH=A.maPNH;
+        maNCC=A.maNCC;
+        maNV=A.maNV;
+        ngayLap=A.ngayLap;
+        chiTiet= new DSCTPhieuNhapHang(0);
+        chiTiet= new DSCTPhieuNhapHang(0);
+        for(int i=0;i<A.chiTiet.getN();i++){
+            chiTiet.them(A.chiTiet.getChiTiet()[i]);
+        }
+    }
+    public String getMaNCC(){
+        return maNCC;
+    }
+    public void setMaNCC(String s){
+        maNCC=s;
+    }
+    public String getMaPNH(){
+        return maPNH;
+    }
+    public void setMaPNH(String s){
+        maPNH=s;
+    }
+    public String getMaNV(){
+        return maNV;
+    }
+    public void setMaNV(String s){
+        maNV=s;
+    }
+    public LocalDate getNgayLap(){
+        return ngayLap;
+    }
+    public void setNgayLap(LocalDate s){
+        ngayLap=s;
+    }
+    public double getTongTien(){
+        return chiTiet.tinhTongTien();
     }
     @Override public String toString() {
         StringBuilder sb = new StringBuilder(String.format("PNH %-6s | Ngày: %s | NCC: %s | NV: %s | Tổng tiền: %,.0f",
-                maPNH, ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), maNCC, maNV, getTongTien()));
-        for (CTPhieuNhapHang ct : chiTiet) sb.append("\n").append(ct);
+                maPNH, ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), maNCC, maNV, chiTiet.tinhTongTien()));
+        for(CTPhieuNhapHang ct: chiTiet.getChiTiet()){
+            sb.append("\n").append(ct);
+        }
         return sb.toString();
     }
 }

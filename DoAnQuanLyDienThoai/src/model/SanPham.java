@@ -6,7 +6,7 @@ import java.io.Serializable;
 public abstract class SanPham implements Serializable {
     private static final long serialVersionUID = 1L;
     private String maSP, tenSP, mauSac;
-    private int soLuong;
+    private int soLuong; 
     private double donGia;
     /*thuộc tính static: đếm số đối tượng sản phẩm đấ được tạo ra */
     private static int tongSanPham = 0; 
@@ -99,6 +99,11 @@ public abstract class SanPham implements Serializable {
         soLuong += sl;
         System.out.println("So luong hang hoa da them vao kho tong la: "+ sl ):
     }
+    /* Hàm này giúp ta tìm kiếm những từ khóa riêng biệt của từng loại máy */
+    protected boolean tenChua(String s)
+    {
+        return tenSP.toLowerCase().contains(s.toLowerCase());
+    }
     //---NHƯNG PHƯƠNG THỨC ABSTRACT CỦA SẢN PHẨM---
     /** Mỗi loại máy tự mô tả thuộc tính riêng (đa hình). */
     public abstract String thongTinRieng();
@@ -107,7 +112,48 @@ public abstract class SanPham implements Serializable {
     public abstract boolean HangPro_ultra();
     /*Hàm trả về giá bán lẻ từng hãng = giá gốc + phụ thu(có thể phụ thu dòng pro/ultra , có thể trừ nếu ưu đãi dòng cũ) */
     public abstract double Giabanle();
-    
+    /*Hàm nhập những tính năng riêng của máy */
+    public abstract void nhapTNrieng();
+    /* Hàm nhập thông tin */
+    public void nhap()
+    {
+        System.out.println("---Nhap thong tin san pham---");
+        setmaSP(Nhaplieu.docChuoi("Ma san pham"));
+        setTenSP(Nhaplieu.docChuoi("Ten san pham"));
+        setsoLuong(Nhaplieu.docSoNguyen("So luong",0));
+        setdongia(Nhaplieu.docSoNguyen("Don gia(VND)", 1));
+        setMausac(Nhaplieu.docChuoi("Mau sac"));
+        nhapTNrieng();
+    }
+    // Hàm sửa thông tin theo menu. Không sửa MASP vì MASP Là phần nối của HĐ Và CTSP
+    public void sua()
+    {   int chon;
+        do{
+        System.out.println("\nSua san pham ["+ maSP +"] "+tenSP);
+        System.out.println("Nhap tu 0 -> 5 voi nhung muc ban muon sua: ");
+        System.out.println("1. Tên | 2. Số lượng | 3. Đơn giá | 4. Màu sắc | 5. Tính năng riêng | 0. Xong");
+        chon=Nhaplieu.docSoNguyen("chon",0,5);
+            switch (chon) {
+                case 1: setTenSP(Nhaplieu.docChuoi("Ten moi"));
+                    break;
+                case 2: setsoLuong(Nhaplieu.docSoNguyen("So luong moi",0));
+                    break;
+                case 3: setdongia(Nhaplieu.docSoNguyen("Don gia moi", 1));
+                    break;
+                case 4: setMausac(Nhaplieu.docChuoi("Mau sac moi"));
+                    break;
+                case 5: nhapTNrieng();
+                default:
+                    break;
+            }
+        } while(chon!=0);
+    }
+    public void xuat()
+    {
+        System.out.printf("[%s] %s | Hang: %s | Mau: %s | Ton: %d%n",maSP,tenSP,getHang(),mauSac,soLuong);
+        System.out.printf("Gia goc: %,.0f | Gia ban le: %,.0f | Dong cao cap: %s%%n",donGia,Giabanle(),HangPro_ultra() ? "Co" : "Khong");
+        System.out.println(" " + getTNrieng());
+    }
     @Override
     public String toString() {
         return String.format("%-6s %-8s %-22s SL:%-4d ĐG:%,15.0f Màu:%-8s | %s",

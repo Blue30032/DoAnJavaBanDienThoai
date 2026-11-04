@@ -1,7 +1,7 @@
 package model;
 
 import java.io.Serializable;
-
+import helper.Nhaplieu;
 /** Lớp cha trừu tượng: Sản phẩm (Mã SP, Tên SP, Số lượng, ĐG, Màu sắc). */
 public abstract class SanPham implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -1,7 +1,11 @@
 import java.time.LocalDate;
+import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
-public class QLDSPNH extends DSPhieuNhapHang {
+public class QLDSPNH extends QuanLy {
+    static DSPhieuNhapHang ds= new DSPhieuNhapHang();
+    @Override
     public void menu(){
+        Scanner sc = new Scanner(System.in);
         int chon;
         do{
             System.out.println("\n========== QUAN LY PHIEU NHAP HANG ==========");
@@ -23,28 +27,26 @@ public class QLDSPNH extends DSPhieuNhapHang {
             sc.nextLine();
             switch(chon){
                 case 1:
-                    super.xuat();
+                    ds.xuat();
                     break;
                 case 2:
-                    PhieuNhapHang A=new PhieuNhapHang();
-                    A.nhap();
-                    super.them(A);
+                    ds.them();
                     System.out.println("Da them phieu nhap hang thanh cong!");
                     break;
                 case 3:
                     System.out.print("Nhap ma phieu nhap hang muon sua: ");
                     String maSua=sc.nextLine();
-                    super.sua(maSua);
+                    ds.sua(maSua);
                     break;
                 case 4:
                     System.out.print("Nhap ma phieu nhap hang muon xoa: ");
                     String maXoa=sc.nextLine();
-                    super.xoa(maXoa);
+                    ds.xoa(maXoa);
                     break;
                 case 5:
                     System.out.print("Nhap ma phieu nhap hang can tim: ");
                     String maTim=sc.nextLine();
-                    PhieuNhapHang pnh=super.findMaPNH(maTim);
+                    PhieuNhapHang pnh=ds.findMaPNH(maTim);
                     if(pnh!=null){
                         System.out.println("Tim thay phieu nhap hang:");
                         System.out.println(pnh);
@@ -56,33 +58,33 @@ public class QLDSPNH extends DSPhieuNhapHang {
                 case 6:
                     System.out.print("Nhap ma nha cung cap: ");
                     String maNCC=sc.nextLine();
-                    DSPhieuNhapHang dsNCC=super.findMaNCC(maNCC);
+                    DSPhieuNhapHang dsNCC=ds.findMaNCC(maNCC);
                     dsNCC.xuat();
                     break;
                 case 7:
                     System.out.print("Nhap ma nhan vien: ");
                     String maNV=sc.nextLine();
-                    DSPhieuNhapHang dsNV=super.findMaNV(maNV);
+                    DSPhieuNhapHang dsNV=ds.findMaNV(maNV);
                     dsNV.xuat();
                     break;
                 case 8:
                     System.out.print("Nhap ngay lap (dd/MM/yyyy): ");
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate ngay = LocalDate.parse(sc.nextLine(), dtf);
-                    DSPhieuNhapHang dsNgay = super.findNgayLap(ngay);
+                    DSPhieuNhapHang dsNgay = ds.findNgayLap(ngay);
                     dsNgay.xuat();
                     break;
                 case 9:
-                    super.thongkeNCC();
+                    ds.thongkeNCC();
                     break;
                 case 10:
-                    super.thongkeNV();
+                    ds.thongkeNV();
                     break;
                 case 11:
-                    super.thongkeTongTienNCC();
+                    ds.thongkeTongTienNCC();
                     break;
                 case 12:
-                    super.thongkeTongTienNV();
+                    ds.thongkeTongTienNV();
                     break;
                 case 0:
                     System.out.println("Ket thuc chuong trinh!");

@@ -1,9 +1,11 @@
 import java.util.Arrays;
 import java.util.Scanner;
-public class DSNhaCungCap extends NhaCungCap {
+public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
     Scanner sc= new Scanner(System.in);
     private NhaCungCap[] ncc;
     private int n;
+    
+    //3 ham thiet lap
     public DSNhaCungCap(){
         ncc=new NhaCungCap[0];
         n=0;
@@ -19,11 +21,15 @@ public class DSNhaCungCap extends NhaCungCap {
             ncc[i]=new NhaCungCap(A.ncc[i]);
         }
     }
+    
+    //ham them,sua,xoa
+    @Override
     public void them(NhaCungCap A){ 
         ncc=Arrays.copyOf(ncc,ncc.length+1);
         ncc[n]=new NhaCungCap(A);
         n++;
     }
+    @Override
     public void xoa(String MaNCC){
         for(int i=0;i<n;i++){
             if(ncc[i].getMaNCC().equals(MaNCC)){
@@ -38,6 +44,7 @@ public class DSNhaCungCap extends NhaCungCap {
         }
         System.out.println("Khong tim thay Nha Cung Cap!");
     }
+    @Override
     public void sua(String MaNCC){
         for(int i=0;i<n;i++){
             if(ncc[i].getMaNCC().equals(MaNCC)){
@@ -58,6 +65,9 @@ public class DSNhaCungCap extends NhaCungCap {
         }
         System.out.println("Khong tim thay Nha Cung Cap!");
     }
+    
+    //cac ham tim kiem
+    //ham tim kiem theo ma nha cung cap, tra ve 1 nha cung cap
     public NhaCungCap findMaNCC(String maNCC){
         for(int i=0;i<n;i++){
             if(ncc[i].getMaNCC().equals(maNCC)){
@@ -66,22 +76,19 @@ public class DSNhaCungCap extends NhaCungCap {
         }
         return null;
     }
+    //ham tim kiem theo ten nha cung cap,tra ve danh sach cac nha cung cap
     public DSNhaCungCap findTen(String tenNCC){
         DSNhaCungCap x= new DSNhaCungCap();
-        x.ncc=new NhaCungCap[1];
-        int y=0;
         for(int i=0;i<n;i++){
             if(ncc[i].getTenNCC().equals(tenNCC)){
                 x.them(ncc[i]);
-                y++;
             }
         }
-        x.n=y;
         return x;
     }
+    //ham tim kiem theo dia chi,tra ve danh sach
     public DSNhaCungCap findDiaChi(String diaChi){
         DSNhaCungCap x= new DSNhaCungCap();
-        x.ncc=new NhaCungCap[1];
         for(int i=0;i<n;i++){
             if(ncc[i].getDiaChi().equalsIgnoreCase(diaChi)){
                 x.them(ncc[i]);
@@ -89,15 +96,18 @@ public class DSNhaCungCap extends NhaCungCap {
         }
         return x;
     }
+    
+    //cac ham thong ke
     public void thongkeDiaChi(){
         System.out.println("=============THONG KE THEO DIA CHI=============");
         System.out.printf("Dia chi        |So luong\n");
         String[] ds=new String[0];
         int k=0;
+        //lap 1 mang chua cac dia chi khong trung
         for(int i=0;i<n;i++){
             boolean found=false;
             for(int j=0;j<k;j++){
-                if(ncc[j].getDiaChi().equalsIgnoreCase(ncc[i].getDiaChi())){
+                if(ds[j].equalsIgnoreCase(ncc[i].getDiaChi())){
                     found=true;
                     break;
                 }
@@ -108,6 +118,7 @@ public class DSNhaCungCap extends NhaCungCap {
                 k++;
             }
         }
+        //dem so lan lap lai cua cac dia chi
         for(int i=0;i<k;i++){
             int dem=0;
             for(int j=0;j<n;j++){
@@ -118,10 +129,37 @@ public class DSNhaCungCap extends NhaCungCap {
             System.out.printf("%-15s|%7d\n",ds[i],dem);
         }
     }
-    public void xuat(){
-        System.out.println("=============DANH SACH NHA CUNG CAP=============");
-        for(int i=0;i<n;i++){
-            System.out.println(ncc[i]);
+    
+    //xuat thong tin
+    public void xuat() {
+        System.out.println("\n========== DANH SACH NHA CUNG CAP ==========\n");
+        // Xac dinh do rong cac cot
+        int stt = 3;
+        int ma = "MA NCC".length();
+        int ten = "TEN NHA CUNG CAP".length();
+        int dc = "DIA CHI".length();
+        for (int i = 0; i < n; i++) {
+            ma = Math.max(ma, ncc[i].getMaNCC().length());
+            ten = Math.max(ten, ncc[i].getTenNCC().length());
+            dc = Math.max(dc, ncc[i].getDiaChi().length());
+            stt = Math.max(stt, String.valueOf(i + 1).length());
         }
+        // In tieu de cot
+        System.out.printf("%-" + (stt + 3) + "s", "STT");
+        System.out.printf("%-" + (ma + 3) + "s", "MA NCC");
+        System.out.printf("%-" + (ten + 3) + "s", "TEN NHA CUNG CAP");
+        System.out.printf("%s\n", "DIA CHI");
+        // Tinh do dai duong ke
+        int tong = stt + ma + ten + dc + 9;
+        System.out.println("-".repeat(tong));
+        // In danh sach
+        for (int i = 0; i < n; i++) {
+            System.out.printf("%-" + (stt + 3) + "s", i + 1);
+            System.out.printf("%-" + (ma + 3) + "s", ncc[i].getMaNCC());
+            System.out.printf("%-" + (ten + 3) + "s", ncc[i].getTenNCC());
+            System.out.println(ncc[i].getDiaChi());
+        }
+        System.out.println("-".repeat(tong));
+        System.out.println("Tong so nha cung cap: " + n);
     }
 }

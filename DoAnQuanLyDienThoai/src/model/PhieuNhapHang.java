@@ -6,6 +6,9 @@ public class PhieuNhapHang {
     private String maNV;
     private LocalDate ngayLap;
     private DSCTPhieuNhapHang chiTiet;
+    private double tongTien;
+    
+    //3 ham thiet lap
     public PhieuNhapHang(){
         maPNH="";
         maNCC="";
@@ -20,7 +23,7 @@ public class PhieuNhapHang {
         this.ngayLap=ngayLap;
         chiTiet= new DSCTPhieuNhapHang(0);
         for(int i=0;i<ct.getN();i++){
-            chiTiet.them(ct.getChiTiet()[i]);
+            chiTiet.them(ct.getChiTietMang()[i]);
         }
     }
     public PhieuNhapHang(PhieuNhapHang A){
@@ -29,11 +32,22 @@ public class PhieuNhapHang {
         maNV=A.maNV;
         ngayLap=A.ngayLap;
         chiTiet= new DSCTPhieuNhapHang(0);
-        chiTiet= new DSCTPhieuNhapHang(0);
         for(int i=0;i<A.chiTiet.getN();i++){
-            chiTiet.them(A.chiTiet.getChiTiet()[i]);
+            chiTiet.them(A.chiTiet.getChiTietMang()[i]);
         }
     }
+    
+    //lay thong tin
+    @Override public String toString() {
+        StringBuilder sb = new StringBuilder(String.format("PNH %-6s | Ngày: %s | NCC: %s | NV: %s | Tổng tiền: %,.0f",
+                maPNH, ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), maNCC, maNV, getTongTien()));
+        for(CTPhieuNhapHang ct: chiTiet.getChiTietMang()){
+            sb.append("\n").append(ct);
+        }
+        return sb.toString();
+    }
+    
+    //cac ham get/set
     public String getMaNCC(){
         return maNCC;
     }
@@ -59,14 +73,10 @@ public class PhieuNhapHang {
         ngayLap=s;
     }
     public double getTongTien(){
-        return chiTiet.tinhTongTien();
+        
+        return tongTien;
     }
-    @Override public String toString() {
-        StringBuilder sb = new StringBuilder(String.format("PNH %-6s | Ngày: %s | NCC: %s | NV: %s | Tổng tiền: %,.0f",
-                maPNH, ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), maNCC, maNV, chiTiet.tinhTongTien()));
-        for(CTPhieuNhapHang ct: chiTiet.getChiTiet()){
-            sb.append("\n").append(ct);
-        }
-        return sb.toString();
+    public DSCTPhieuNhapHang getChiTiet(){
+        return chiTiet;
     }
 }

@@ -3,6 +3,8 @@ public class CTPhieuNhapHang {
     private String maSP;
     private int soLuong;
     private double donGia;
+    
+    //3 ham thiet lap
     public CTPhieuNhapHang(){
         maPNH="";
         maSP="";
@@ -21,9 +23,13 @@ public class CTPhieuNhapHang {
         soLuong=A.soLuong;
         donGia=A.donGia;
     }
+    
+    //lay thong tin
     @Override public String toString() {
-        return String.format("|   - %-6s |SL:%-3d |ĐG nhập:%,13.0f |Thành tiền:%,14.0f|", maSP, soLuong, donGia, getThanhTien());
+        return String.format("|   - %-6s |SL:%-3d |ĐG nhập:%,13.0f |Thành tiền:%,.0f|", maSP, soLuong, donGia, getThanhTien());
     }
+    
+    //cac ham get/set
     public void setMaPNH(String x){
         maPNH=x;
     }

@@ -1,8 +1,11 @@
 public class NhaCungCap {
+    //dem so luong nha cung cap duoc tao
     private static int countNC=0;
     private String maNCC;
     private String tenNCC;
     private String diaChi;
+    
+    //3 ham thiet lap
     public NhaCungCap(){
         maNCC="";
         tenNCC="";
@@ -21,7 +24,11 @@ public class NhaCungCap {
         diaChi=A.diaChi;
         countNC++;
     }
+    
+    //lay thong tin
     @Override public String toString() { return String.format("%-6s %-25s %s", maNCC, tenNCC, diaChi); }
+    
+    //cac ham get/set
     public String getMaNCC(){
         return maNCC;
     }

@@ -1,5 +1,7 @@
 import java.util.Scanner;
-public class QLDSNCC extends DSNhaCungCap {
+public class QLDSNCC extends QuanLy {
+    static DSNhaCungCap ds= new DSNhaCungCap();
+    @Override
     public void menu(){
         int chon;
         Scanner sc = new Scanner(System.in);
@@ -19,28 +21,27 @@ public class QLDSNCC extends DSNhaCungCap {
             sc.nextLine();
             switch(chon){
                 case 1:
-                    super.xuat();
+                    ds.xuat();
                     break;
                 case 2:
                     NhaCungCap A=new NhaCungCap();
-                    A.nhap();
-                    super.them(A);
+                    ds.them(A);
                     System.out.println("Da them thanh cong!");
                     break;
                 case 3:
                     System.out.print("Nhap ma NCC muon sua: ");
                     String maSua=sc.nextLine();
-                    super.sua(maSua);
+                    ds.sua(maSua);
                     break;
                 case 4:
                     System.out.print("Nhap ma NCC muon xoa: ");
                     String maXoa=sc.nextLine();
-                    super.xoa(maXoa);
+                    ds.xoa(maXoa);
                     break;
                 case 5:
                     System.out.print("Nhap ma NCC can tim: ");
                     String maTim=sc.nextLine();
-                    NhaCungCap x=super.findMaNCC(maTim);
+                    NhaCungCap x=ds.findMaNCC(maTim);
                     if(x!=null){
                         System.out.println("Tim thay NCC:");
                         System.out.println(x);
@@ -52,17 +53,17 @@ public class QLDSNCC extends DSNhaCungCap {
                 case 6:
                     System.out.print("Nhap ten NCC can tim: ");
                     String ten=sc.nextLine();
-                    DSNhaCungCap dsTen=super.findTen(ten);
+                    DSNhaCungCap dsTen=ds.findTen(ten);
                     dsTen.xuat();
                     break;
                 case 7:
                     System.out.print("Nhap dia chi can tim: ");
                     String dc=sc.nextLine();
-                    DSNhaCungCap dsDC=super.findDiaChi(dc);
+                    DSNhaCungCap dsDC=ds.findDiaChi(dc);
                     dsDC.xuat();
                     break;
                 case 8:
-                    super.thongkeDiaChi();
+                    ds.thongkeDiaChi();
                     break;
                 case 0:
                     System.out.println("Ket thuc chuong trinh!");

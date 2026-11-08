@@ -1,18 +1,74 @@
 package model;
 
-import java.io.Serializable;
+public abstract class Nguoi {
+    private String ma;
+    private String ho;
+    private String ten;
+    private String gioiTinh;
+    private String SDT;
 
-/** Lớp cha chung cho Khách hàng và Nhân viên (tên, giới tính, SĐT). */
-public abstract class Nguoi implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String ten, gioiTinh, sdt;
-
-    public Nguoi(String ten, String gioiTinh, String sdt) {
-        this.ten = ten; this.gioiTinh = gioiTinh; this.sdt = sdt;
+    public Nguoi() {
+        ma = "";
+        ho = "";
+        ten = "";
+        gioiTinh = "";
+        SDT = "";
     }
-    public String getTen() { return ten; }
-    public void setTen(String ten) { this.ten = ten; }
-    public String getGioiTinh() { return gioiTinh; }
-    public String getSdt() { return sdt; }
-    public void setSdt(String sdt) { this.sdt = sdt; }
+
+    public Nguoi(String ma, String ho,String ten, String gioiTinh, String SDT) {
+        this.ma = ma;
+        this.ho=ho;
+        this.ten = ten;
+        this.gioiTinh = gioiTinh;
+        this.SDT = SDT;
+    }
+
+    public Nguoi(Nguoi n){
+        this.ma=n.ma;
+        this.ho=n.ho;
+        this.ten =n.ten;
+        this.gioiTinh = n.gioiTinh;
+        this.SDT = n.SDT;
+    }
+    public String getMa() {
+        return ma;
+    }
+
+    public void setMa(String ma) {
+        this.ma = ma;
+    }
+
+    public String getHo() {
+        return ho;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+    
+    public String getTen() {
+        return ten;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+ 
+    public String getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getSDT() {
+        return SDT;
+    }
+
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
+
+    public abstract void xuat();
 }

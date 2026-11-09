@@ -9,21 +9,24 @@ public class NhanVien extends Nguoi {
         super();
         ChucVu = "";
         CCCD = "";
-        LuongCB = 0;  
+        LuongCB = 0;
+        
     }
 
     public NhanVien(String maNV,String hoNV, String tenNV, String GT,String SDT, String ChucVu,String CCCD, double LuongCB) {
         super(maNV,hoNV,tenNV,GT,SDT);
         this.ChucVu = ChucVu;
         this.CCCD = CCCD;
-        this.LuongCB = LuongCB; 
+        this.LuongCB = LuongCB;
+        
     }
 
     public NhanVien(NhanVien other) {
         super(other);
         this.ChucVu=other.ChucVu;
         this.CCCD=other.CCCD;
-        this.LuongCB=other.LuongCB;   
+        this.LuongCB=other.LuongCB;
+        
     }
     
     public String getMaNV() {
@@ -91,6 +94,32 @@ public class NhanVien extends Nguoi {
     public String getHoTen() {
         return getHo() + " " + getTen();
     }
+    
+    public String toFileString() {
+        return getMaNV() + "|"
+            + getHoNV() + "|"
+            + getTenNV() + "|"
+            + getGT() + "|"
+            + getSDT() + "|"
+            + getChucVu() + "|"
+            + getCCCD() + "|"
+            + getLuongCB();
+    }
+    public static NhanVien fromFileString(String dong) {
+        String[] a = dong.split("\\|");
+
+        return new NhanVien(
+            a[0].trim(),
+            a[1].trim(),
+            a[2].trim(),
+            a[3].trim(),
+            a[4].trim(),
+            a[5].trim(),
+            a[6].trim(),
+            Double.parseDouble(a[7].trim())
+        );
+    }
+    
     @Override
     public void xuat() {
         System.out.println(toString());
@@ -100,4 +129,5 @@ public class NhanVien extends Nguoi {
     public String toString() {
         return String.format("%-8s %-15s %-15s %-10s %-15s %-15s %-15s %,.0f",getMa(), getHo(), getTen(), getGioiTinh(), getSDT(), ChucVu, CCCD, LuongCB);
     }
+    
 }

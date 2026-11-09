@@ -1,4 +1,4 @@
-package DoAnBanDienThoai;
+package model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -275,104 +275,41 @@ public class DSKH {
         BufferedReader br = null;
 
         try {
-        // Bước 1: Mở file
             br = new BufferedReader(new FileReader(TEN_FILE));
-
-        // Bước 2: Tạo mảng mới để chứa dữ liệu
-            KhachHang[] dsMoi = new KhachHang[MAX];
-            int soLuong = 0;
             String dong;
 
-        // Bước 3: Đọc từng dòng trong file
-            while ((dong = br.readLine()) != null && soLuong < MAX) {
+            n = 0;
 
-            // Bỏ qua dòng trống
-                if (dong.trim().isEmpty()) {
-                    continue;
-                }
-
-            // Tách dữ liệu theo dấu |
-                String[] p = dong.split("\\|", -1);
-
-            // Kiểm tra đủ 6 thông tin
-                if (p.length == 6) {
-                    String maKH = p[0].trim();
-
-                // Kiểm tra mã khách hàng đã tồn tại chưa
-                    if (timTrongMang(dsMoi, soLuong, maKH) == -1) {
-
-                        try {
-                            String hoKH = p[1].trim();
-                            String tenKH = p[2].trim();
-                            String gtinhKH = p[3].trim();
-                            String sdtKH = p[4].trim();
-                            double tongTien = Double.parseDouble(p[5].trim());
-
-                        // Tạo đối tượng khách hàng
-                            dsMoi[soLuong] = new KhachHang(maKH, hoKH, tenKH, gtinhKH, sdtKH, tongTien);
-
-                            soLuong++;
-
-                        } catch (NumberFormatException e) {
-                            System.out.println("Bo qua dong loi: " + dong);
-                        }
-                    }
+            while ((dong = br.readLine()) != null) {
+                if (!dong.trim().isEmpty()) {
+                    ds[n] = KhachHang.fromFileString(dong);
+                    n++;
                 }
             }
 
-        // Bước 4: Cập nhật danh sách
-            ds = dsMoi;
-            n = soLuong;
-
-            System.out.println("Doc file thanh cong!");
-
         } catch (IOException e) {
-            System.out.println("Khong the doc file!");
+            System.out.println("Loi doc file khach hang!");
 
         } finally {
-        // Bước 5: Đóng file
             try {
                 if (br != null) {
                     br.close();
                 }
             } catch (IOException e) {
-                System.out.println("Loi dong file!");
+                System.out.println("Loi dong file khach hang!");
             }
         }
     }
 
-    private int timTrongMang(
-            KhachHang[] mang, int soLuong, String maKH) {
-
-        for (int i = 0; i < soLuong; i++) {
-            if (mang[i].getMaKH().equalsIgnoreCase(maKH)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
 
     public void ghiFile() throws IOException {
-    // Bước 1: Mở file
-        BufferedWriter bw = new BufferedWriter(
-            new FileWriter(TEN_FILE));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(TEN_FILE));
 
-    // Bước 2: Ghi file
         for (int i = 0; i < n; i++) {
-            KhachHang kh = ds[i]; 
-
-            bw.write(kh.getMaKH() + "|"
-                    + kh.getHoKH() + "|"
-                    + kh.getTenKH() + "|"
-                    + kh.getGtinhKH() + "|"
-                    + kh.getSdtKH() + "|"
-                    + kh.getTongTien ());
-
+            bw.write(ds[i].toFileString());
             bw.newLine();
         }
 
-    // Bước 3: Đóng file
         bw.close();
     }
 }

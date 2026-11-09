@@ -1,10 +1,12 @@
-package model;
+ package DoAnBanDienThoai;
+
 public class KhachHang extends Nguoi {
     private double TongTien;
 
     public KhachHang() {
         super();
-        TongTien = 0;        
+        TongTien = 0;
+        
     }
 
     public KhachHang(String maKH,String hoKH,String tenKH, String gtinhKH, String sdtKH, double TongTien) {
@@ -77,5 +79,24 @@ public class KhachHang extends Nguoi {
     @Override
     public String toString() {
         return String.format("%-8s %-15s %-25s %-12s %-15s %,.0f",getMa(),getHo(),getTen(),getGioiTinh(),getSDT(), TongTien);
+    }
+    public String toFileString() {
+        return getMa() + "|"
+            + getHo() + "|"
+            + getTen() + "|"
+            + getGioiTinh() + "|"
+            + getSDT() + "|"
+            + getTongTien();
+    }
+    public static KhachHang fromFileString(String dong) {
+        String[] a = dong.split("\\|");
+
+        return new KhachHang(
+            a[0].trim(),
+            a[1].trim(),
+            a[2].trim(),
+            a[3].trim(),
+            a[4].trim(),
+            Double.parseDouble(a[5].trim()));
     }
 }

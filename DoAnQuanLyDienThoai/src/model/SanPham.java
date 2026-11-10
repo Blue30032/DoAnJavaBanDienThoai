@@ -11,7 +11,7 @@ public abstract class SanPham implements Serializable {
     /*thuộc tính static: đếm số đối tượng sản phẩm đấ được tạo ra */
     private static int tongSanPham = 0; 
     // constructor
-    public Sanpham() 
+    public SanPham() 
     {
         maSP="";
         tenSP="";
@@ -20,7 +20,7 @@ public abstract class SanPham implements Serializable {
         mauSac="";
         tongSanPham++;
     }
-    public Sanpham(Sanpham a)
+    public SanPham(SanPham a)
     {
         maSP=a.maSP;
         tenSP=a.tenSP;
@@ -114,6 +114,19 @@ public abstract class SanPham implements Serializable {
     public abstract double Giabanle();
     /*Hàm nhập những tính năng riêng của máy */
     public abstract void nhapTNrieng();
+    /*Hàm ghi vào dòng văn bản vào file */
+    public abstract String toDongFile();
+    //Hàm phần đầu của dòng văn bản vào file
+    protected String dongChung()
+    {
+        return LamSach(maSP) + "|" + LamSach(tenSP) + "|" + soLuong + "|"
+                + String.format(java.util.Locale.US, "%.2f", donGia)  + "|" + LamSach(mauSac);
+    }
+    /* Hàm làm sạch chuỗi */
+    private static String LamSach(String s)
+    {
+        return s==null ? "" : s.replace("|", "/");
+    }
     /* Hàm nhập thông tin */
     public void nhap()
     {

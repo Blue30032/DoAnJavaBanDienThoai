@@ -93,4 +93,9 @@ public class Android extends SanPham {
         Butcamung = Nhaplieu.docCoKhong("Dich vu may co But cam ung (c/k)");
         Conghongngoai = Nhaplieu.docCoKhong("Dich vu may co Cong hong ngoai (c/k):");
     }
+    @Override 
+    public String toDongFile()
+    {
+        return "ANDROID|" + dongChung() + "|" + Butcamung +"|" +Conghongngoai;
+    }
 }

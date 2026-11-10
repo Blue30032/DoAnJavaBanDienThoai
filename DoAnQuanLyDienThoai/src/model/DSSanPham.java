@@ -65,11 +65,11 @@ public class DSSanPham implements IDocGhiFile {
             return true;
         }   
     }
-    // Nhập sản phẩm ios or android vào để thêm vào ds . trả về true nếu thêm thành công
+    // Nhập sản phẩm IOS or android vào để thêm vào ds . trả về true nếu thêm thành công
     public boolean nhapSanPham()
     {
         int loai = Nhaplieu.docSoNguyen("Nhap loai san pham(1.IOS , 2.ANDROID", 1, 2);
-        SanPham sp = (loai==1) ? new Ios() : new Android();
+        SanPham sp = (loai==1) ? new IOS() : new Android();
         sp.nhap();
         if(!them(sp))
         {
@@ -386,7 +386,7 @@ public class DSSanPham implements IDocGhiFile {
                 {
                     throw new IllegalArgumentException("Dữ liệu IOS không hợp lệ cần 7 Đối tượng");
                 }
-                return new Ios(p[1].trim(),p[2].trim()
+                return new IOS(p[1].trim(),p[2].trim()
                     ,Integer.parseInt(p[3].trim()),
                     Double.parseDouble(p[4].trim())
                     ,p[5].trim(),Boolean.parseBoolean(p[6].trim())); // tạo constructor isos từ các đối tượng trong mảng p

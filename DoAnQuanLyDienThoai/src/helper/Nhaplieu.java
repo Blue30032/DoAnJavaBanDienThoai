@@ -76,4 +76,29 @@ public class Nhaplieu {
             System.out.println("Vui long chi nhap co hoac khong, nhap lai!");
         }
     }
+    // hàm yêu cầu chủ thể xác nhận có làm tác vụ đó không nhập có hoặc không
+    public static boolean xacNhan(String cauhoi)
+    {
+        return docCoKhong(cauhoi +"(c/k)");
+    }
+    /* Hiện mục menu theo từng mục  */
+    private static int hienMenu(String tieude,String So0,String[] muc)
+    {
+        System.out.println("\n========== " + tieude + " ==========");
+        for(int i=0;i<muc.length;i++)
+        {
+            System.out.println(i+1+". "+muc[i]);
+            System.out.println("0." + So0);
+            return docSoNguyen("Chon: ", 0, muc.length); // chọn các số từ 0 đến các giá trị trong mục 
+        }
+    }
+    /* Chọn mục menu từ 0 đến số lượng mục và nếu chọn số 0 quay lại menu  */
+    public static int menu(String tieude,String[] muc) 
+    {
+        return hienMenu(tieude, "Quay lai", muc);
+    } 
+    /* Menu chính: giống menu() nhưng mục 0 là "Thoát". */
+    public static int menuChinh(String tieuDe, String[] muc) {
+        return hienMenu(tieuDe, "Thoát", muc);
+    }
 }

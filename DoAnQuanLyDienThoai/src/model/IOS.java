@@ -58,4 +58,9 @@ public class IOS extends SanPham {
     {
         proRes = Nhaplieu.docCoKhong("Dich vu may Apple co Proges (c/k)");
     }
+     @Override 
+    public String toDongFile()
+    {
+        return "IOS|" + dongChung() + "|" + proRes;
+    }
 }

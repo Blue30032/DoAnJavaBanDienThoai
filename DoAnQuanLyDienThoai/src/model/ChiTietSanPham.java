@@ -139,4 +139,31 @@ public class ChiTietSanPham implements Serializable {
                         + "Man hinh: %.1f\" | Pin: %dmAh | Camera: %dMP | Cong sac: %s | Chat lieu: %s",
                 hang, heDieuHanh, chip, ram, dungLuong, manHinh, pin, doPhanGiaiCamera, congSac, chatLieu);
     }
+    /* Các hàm liên quan tới file */
+    // Hàm làm sạch chuỗi  biến dấu / thành | trong file 
+    private static String LamSach(String s)
+    {
+        return s==null ? "" : s.replace("|", "/");
+    }
+    public String toDongFile()
+    {
+        return LamSach(maSP) + "|" + LamSach(heDieuHanh) + "|" + dungLuong + "|" + ram + "|" + LamSach(hang) + "|" 
+        + LamSach(chip) + "|" + (manHinh) + "|" + pin + "|" + doPhanGiaiCamera + 
+        "|" + LamSach(congSac) + "|" + LamSach(chatLieu);
+    }
+    public static ChiTietSanPham tuDongFile(String dong)
+    {
+        String[] p = dong.split("\\|,-1");
+        String loai = p[0].trim().toUpperCase();
+        if(p.length!=11)
+        {
+            throw new IllegalArgumentException("Dữ liệu chi tiết sản phẩm không hợp lệ cần 11 đối tượng");
+        }
+        /*String maSP, String heDieuHanh, int dungLuong, int ram, String hang,
+        String chip, double manHinh, int pin, int doPhanGiaiCamera,
+        String congSac, String chatLieu) cần đủ các đối tượng mới tạo dc chi tiết sản phẩm */
+        return new ChiTietSanPham(p[1].trim(),p[2].trim(),Integer.parseInt(p[3].trim()),Integer.parseInt(p[4].trim()),
+                                    p[5].trim(),p[6].trim(),Double.parseDouble(p[7].trim()),Integer.parseInt(p[8].trim()),
+                                    Integer.parseInt(p[9].trim()),p[10].trim(),p[11].trim());
+    } 
 }

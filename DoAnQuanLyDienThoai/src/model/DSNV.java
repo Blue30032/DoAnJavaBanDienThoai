@@ -1,4 +1,4 @@
-package DoAnBanDienThoai;
+package model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,7 +12,7 @@ public class DSNV {
     private static final int MAX = 1000;
     private static final String TEN_FILE = "NhanVien.txt";
 
-    public DSNV() {
+    public DSNV() {   
         ds = new NhanVien[MAX];
         n = 0;
     }
@@ -388,23 +388,16 @@ public class DSNV {
             }
         }
     }
-
  
    public void ghiFile() throws IOException {
-        BufferedWriter bw = null;
-
-        try {
-            bw = new BufferedWriter(new FileWriter(TEN_FILE));
+           BufferedWriter bw = new BufferedWriter(new FileWriter(TEN_FILE));
 
             for (int i = 0; i < n; i++) {
                 bw.write(ds[i].toFileString());
                 bw.newLine();
             }
 
-        } finally {
-            if (bw != null) {
                 bw.close();
-            }
-        }
     }
 }
+

@@ -56,11 +56,11 @@ public class NhanVien extends Nguoi {
     public void setGT(String GT) {
         setGioiTinh(GT);
     }
-
+    @Override
     public String getSDT() {
         return super.getSDT();
     }
-
+    @Override
     public void setSDT(String SDT) {
         setSDT(SDT);
     }
@@ -119,15 +119,13 @@ public class NhanVien extends Nguoi {
             Double.parseDouble(a[7].trim())
         );
     }
-    
-    @Override
-    public void xuat() {
-        System.out.println(toString());
-    }
 
     @Override
     public String toString() {
         return String.format("%-8s %-15s %-15s %-10s %-15s %-15s %-15s %,.0f",getMa(), getHo(), getTen(), getGioiTinh(), getSDT(), ChucVu, CCCD, LuongCB);
     }
-    
+    @Override
+    public void xuat() {
+        System.out.println(toString());
+    }
 }

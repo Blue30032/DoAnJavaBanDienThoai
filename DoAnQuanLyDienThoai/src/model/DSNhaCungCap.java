@@ -1,9 +1,18 @@
+package model;
+
+import helper.IDanhSach;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
     Scanner sc= new Scanner(System.in);
     private NhaCungCap[] ncc;
     private int n;
+    private static final String TEN_FILE = "NhaCungCap.txt";
     
     //3 ham thiet lap
     public DSNhaCungCap(){
@@ -24,46 +33,51 @@ public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
     
     //ham them,sua,xoa
     @Override
-    public void them(NhaCungCap A){ 
+    public boolean them(NhaCungCap A){ 
         ncc=Arrays.copyOf(ncc,ncc.length+1);
         ncc[n]=new NhaCungCap(A);
         n++;
+        return true;
     }
     @Override
-    public void xoa(String MaNCC){
-        for(int i=0;i<n;i++){
-            if(ncc[i].getMaNCC().equals(MaNCC)){
-                for(int j=i;j<n-1;j++){
-                    ncc[j]=ncc[j+1];
-                }
-                n--;
-                ncc=Arrays.copyOf(ncc,n);
-                System.out.println("Da xoa thanh cong!");
-                return;
-            }
+    public boolean xoa(String MaNCC){
+        int i= IfindMaNCC(MaNCC);
+        if(i==-1){
+            System.out.println("Khong tim thay Nha Cung Cap!");
+            return false;
         }
-        System.out.println("Khong tim thay Nha Cung Cap!");
+        for(int j=i;j<n-1;j++){
+            ncc[j]=ncc[j+1];
+        }
+        n--;
+        ncc=Arrays.copyOf(ncc,n);
+        System.out.println("Da xoa thanh cong!");
+        return true;
     }
     @Override
-    public void sua(String MaNCC){
-        for(int i=0;i<n;i++){
-            if(ncc[i].getMaNCC().equals(MaNCC)){
-                System.out.println("Da tim thay Nha Cung Cap muon sua. Thong tin:");
-                System.out.println(ncc[i]);
-                System.out.println("\nHay chon muc muon sua:");
-                System.out.print("1.Ten Nha Cung Cap.\n2.Dia Chi Nha Cung Cap.\nChon:");
-                int q=sc.nextInt();
-                sc.nextLine();
-                switch(q){
-                    case 1:System.out.print("Nhap Ten Nha Cung Cap Moi:");ncc[i].setTenNCC(sc.nextLine());break;
-                    case 2:System.out.print("Nhap Dia Chi Moi:");ncc[i].setDiaChi(sc.nextLine());break;
-                    default:break;
-                }
-                System.out.println("Da sua thong tin thanh cong!");
-                return;
-            }
+    public boolean sua(String MaNCC){
+        int i= IfindMaNCC(MaNCC);
+        if(i==-1){
+            System.out.println("Khong tim thay Nha Cung Cap!");
+            return false;
         }
-        System.out.println("Khong tim thay Nha Cung Cap!");
+        System.out.println("Da tim thay Nha Cung Cap muon sua. Thong tin:");
+        System.out.println(ncc[i]);
+        System.out.println("\nHay chon muc muon sua:");
+        System.out.print("1.Ten Nha Cung Cap.\n2.Dia Chi Nha Cung Cap.\nChon:");
+        int chon;
+        do{
+            int q=Integer.parseInt(sc.nextLine());
+            switch(q){
+                case 1:System.out.print("Nhap Ten Nha Cung Cap Moi:");ncc[i].setTenNCC(sc.nextLine());break;
+                case 2:System.out.print("Nhap Dia Chi Moi:");ncc[i].setDiaChi(sc.nextLine());break;
+                default:break;
+            }
+            System.out.print("Tiep tuc sua?( 1: Yes / 0: No )");
+            chon=Integer.parseInt(sc.nextLine());
+        }while(chon==1);
+        System.out.println("Da sua thong tin thanh cong!");
+        return true;
     }
     
     //cac ham tim kiem
@@ -75,6 +89,14 @@ public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
             }
         }
         return null;
+    }
+    public int IfindMaNCC(String maNCC){
+        for(int i=0;i<n;i++){
+            if(ncc[i].getMaNCC().equals(maNCC)){
+                return i;
+            }
+        }
+        return -1;
     }
     //ham tim kiem theo ten nha cung cap,tra ve danh sach cac nha cung cap
     public DSNhaCungCap findTen(String tenNCC){
@@ -161,5 +183,64 @@ public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
         }
         System.out.println("-".repeat(tong));
         System.out.println("Tong so nha cung cap: " + n);
+    }
+    public void nhap(){
+        System.out.println("Nhap so luong nha cung cap muon them");
+        int m=sc.nextInt();
+        sc.nextLine();
+        for(int i=0;i<m;i++){
+            NhaCungCap temp=new NhaCungCap();
+            temp.nhap();
+            them(temp);
+        }
+    }
+    public void docFile() {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(TEN_FILE));
+            String dong;
+            ncc= new NhaCungCap[0];
+            n = 0;
+            while ((dong = br.readLine()) != null) {
+                if (!dong.trim().isEmpty()) {
+                    ncc= Arrays.copyOf(ncc, n+1);
+                    ncc[n] = NhaCungCap.fromFileString(dong);
+                    n++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Loi doc file nha cung cap!");
+            System.out.println(e.getMessage());
+
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                System.out.println("Loi dong file nha cung cap!");
+            }
+        }
+    }
+    public void ghiFile(){
+        BufferedWriter bw = null;
+        try{
+            bw=new BufferedWriter(new FileWriter(TEN_FILE));
+            for(int i=0;i<n;i++){
+                bw.write(ncc[i].toFileString());
+                bw.newLine();
+            }
+        }catch(IOException e){
+            System.out.println("Loi ghi file nha cung cap!");
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(bw!=null){
+                    bw.close();
+                }
+            }catch(IOException e){
+                System.out.println("Loi dong file nha cung cap!");
+            }
+        }
     }
 }

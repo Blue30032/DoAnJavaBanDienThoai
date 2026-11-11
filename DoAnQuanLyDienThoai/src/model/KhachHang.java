@@ -1,4 +1,4 @@
- package DoAnBanDienThoai;
+ package model;
 
 public class KhachHang extends Nguoi {
     private double TongTien;
@@ -65,9 +65,10 @@ public class KhachHang extends Nguoi {
         }
     }
 
-    public void congTienMua(double tien) {
-        if (tien > 0) {
-            TongTien += tien;
+    public void dieuchinhTien(double tien) {
+        TongTien += tien;
+        if (TongTien < 0) {
+            TongTien = 0;
         }
     }
 

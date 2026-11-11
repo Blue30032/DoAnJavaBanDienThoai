@@ -101,6 +101,23 @@ public class HoaDon {
             this.tongTien = tongTien;
         }
     } 
+    
+    // Ngay dang dd/MM/yyyy de in ra man hinh
+    public String getNgayLapStr() {
+        return ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    // ----- Ghi / doc 1 dong trong file -----
+    public String toFileString() {
+        return maHD + "|" + maNV + "|" + maKH + "|" + ngayLap + "|" + (long) tongTien;
+    }
+
+    // static: tao HoaDon tu 1 dong trong file (ngay luu dang yyyy-MM-dd)
+    public static HoaDon fromFileString(String dong) {
+        String[] p = dong.split("\\|");
+        return new HoaDon(p[0].trim(), p[1].trim(), p[2].trim(), LocalDate.parse(p[3].trim()),
+                Double.parseDouble(p[4].trim()));
+    }
 
     @Override
     public String toString() {

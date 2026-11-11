@@ -1,4 +1,4 @@
-package DoAnBanDienThoai;
+package model;
 
 import java.io.IOException;
 

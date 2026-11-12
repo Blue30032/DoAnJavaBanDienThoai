@@ -153,7 +153,7 @@ public class ChiTietSanPham implements Serializable {
     }
     public static ChiTietSanPham tuDongFile(String dong)
     {
-        String[] p = dong.split("\\|,-1); //tách chuỗi tại dấu |. giữ lại cả những phần tử rỗng ở cuối chuỗi.
+        String[] p = dong.split("\\|",-1); //tách chuỗi tại dấu |. giữ lại cả những phần tử rỗng ở cuối chuỗi.
         String loai = p[0].trim().toUpperCase();
         if(p.length!=11)
         {

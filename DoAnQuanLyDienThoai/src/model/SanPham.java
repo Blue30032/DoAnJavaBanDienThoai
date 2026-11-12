@@ -8,7 +8,7 @@ public abstract class SanPham implements Serializable {
     private String maSP, tenSP, mauSac;
     private int soLuong; 
     private double donGia;
-    /*thuộc tính static: đếm số đối tượng sản phẩm đấ được tạo ra */
+    /*thuộc tính static: đếm số lần tạo đối tượng SanPham đã được tạo ra */
     private static int tongSanPham = 0; 
     // constructor
     public SanPham() 
@@ -62,19 +62,19 @@ public abstract class SanPham implements Serializable {
     public void setsoLuong(int soLuong)
     {
         if(soLuong<0)
-            throw new IllegalArgumentException("So luong khong the am!")
+            throw new IllegalArgumentException("So luong khong the am!");
         this.soLuong=soLuong;
     }
     public void setdongia(double donGia)
     {
         if(donGia<0)
-            throw new IllegalArgumentException("Gia san pham khong the am!")
+            throw new IllegalArgumentException("Gia san pham khong the am!");
         this.donGia=donGia;
     }
     public void setMausac(String mauSac)
     {
         if(mauSac == null && mauSac.trim().isEmpty())
-            throw new IllegalArgumentException("Mau sac khong dc rong!")
+            throw new IllegalArgumentException("Mau sac khong dc rong!");
         this.mauSac=mauSac;
     }
     // phương thức static lấy ra số lượng đối tượng sản phẩm được tạo ra
@@ -97,7 +97,7 @@ public abstract class SanPham implements Serializable {
         if(sl<0)
             throw new IllegalArgumentException("So luong nhap hang phai la so duong");
         soLuong += sl;
-        System.out.println("So luong hang hoa da them vao kho tong la: "+ sl ):
+        System.out.println("So luong hang hoa da them vao kho tong la: "+ sl );
     }
     /* Hàm này giúp ta tìm kiếm những từ khóa riêng biệt của từng loại máy */
     protected boolean tenChua(String s)
@@ -106,8 +106,10 @@ public abstract class SanPham implements Serializable {
     }
     //---NHƯNG PHƯƠNG THỨC ABSTRACT CỦA SẢN PHẨM---
     /** Mỗi loại máy tự mô tả thuộc tính riêng (đa hình). */
-    public abstract String thongTinRieng();
-    public abstract String loai();
+    /* Hãng sản xuất (iOS luôn là Apple, Android tra theo tên máy). */
+    public abstract String getHang();
+    /* hàm trả về tính năng riêng của từng dòng điện thoại */
+    public abstract String getTNrieng();
     /*hàm trả về xem máy có phải dòng pro/pro max đối với ios _ ultra đối với android(samsung) */
     public abstract boolean HangPro_ultra();
     /*Hàm trả về giá bán lẻ từng hãng = giá gốc + phụ thu(có thể phụ thu dòng pro/ultra , có thể trừ nếu ưu đãi dòng cũ) */

@@ -226,7 +226,13 @@ public class QLDSPNH extends QuanLy {
                 case 7:
                     System.out.print("Nhap thanh tien:");
                     double thanhTien=Double.parseDouble(sc.nextLine());
-                    dsCTPNH.findThanhTien(thanhTien).xuat();
+                    DSCTPhieuNhapHang z=dsCTPNH.findThanhTien(thanhTien);
+                    if(z==null){
+                        System.out.println("Khong tim thay!");
+                    }
+                    else{
+                        z.xuat();
+                    }
                 case 8:
                     dsCTPNH.thongkeSoLuong();
                     break;

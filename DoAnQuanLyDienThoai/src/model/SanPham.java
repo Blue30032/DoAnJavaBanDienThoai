@@ -35,6 +35,7 @@ public abstract class SanPham implements Serializable {
         setsoLuong(soLuong);
         setdongia(donGia);
         setMausac(mauSac);
+        tongSanPham++;
     }
     //get
     public String getMaSP() { return maSP; }
@@ -45,7 +46,7 @@ public abstract class SanPham implements Serializable {
     //set
     public void setmaSP(String maSP)
     {
-        if(maSP==null && maSP.trim().isEmpty())
+        if(maSP==null || maSP.trim().isEmpty())
         {
             throw new IllegalArgumentException("maSP khong dc rong!");
         }
@@ -53,7 +54,7 @@ public abstract class SanPham implements Serializable {
     }
     public void setTenSP(String tenSP)
     {
-        if(tenSP==null && tenSP.trim().isEmpty())
+        if(tenSP==null || tenSP.trim().isEmpty())
         {
             throw new IllegalArgumentException("tenSP khong dc rong!");
         }
@@ -73,7 +74,7 @@ public abstract class SanPham implements Serializable {
     }
     public void setMausac(String mauSac)
     {
-        if(mauSac == null && mauSac.trim().isEmpty())
+        if(mauSac == null || mauSac.trim().isEmpty())
             throw new IllegalArgumentException("Mau sac khong dc rong!");
         this.mauSac=mauSac;
     }
@@ -166,12 +167,13 @@ public abstract class SanPham implements Serializable {
     public void xuat()
     {
         System.out.printf("[%s] %s | Hang: %s | Mau: %s | Ton: %d%n",maSP,tenSP,getHang(),mauSac,soLuong);
-        System.out.printf("Gia goc: %,.0f | Gia ban le: %,.0f | Dong cao cap: %s%%n",donGia,Giabanle(),HangPro_ultra() ? "Co" : "Khong");
+        System.out.printf("Gia goc: %,.0f | Gia ban le: %,.0f | Dong cao cap: %s%n",donGia,Giabanle(),
+                          HangPro_ultra() ? "Co" : "Khong");
         System.out.println(" " + getTNrieng());
     }
     @Override
     public String toString() {
         return String.format("%-6s %-8s %-22s SL:%-4d ĐG:%,15.0f Màu:%-8s | %s",
-                maSP, loai(), tenSP, soLuong, donGia, mauSac, thongTinRieng());
+                maSP, getHang(), tenSP, soLuong, donGia, mauSac, getTNrieng());
     }
 }

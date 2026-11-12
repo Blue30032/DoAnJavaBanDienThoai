@@ -138,7 +138,10 @@ public class DSCTPhieuNhapHang {
         }
         return -1;
     }
-    
+    public double tongTienPNH(String maPNH){
+        DSCTPhieuNhapHang x=findPNH(maPNH);
+        return x.tinhTongTien();
+    }
     public void thongkeSoLuong(){
         System.out.println("=============THONG KE SO LUONG CHI TIET THEO MA PHIEU NHAP HANG=============");
         System.out.printf("Ma PNH |SL chi tiet\n");

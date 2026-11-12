@@ -1,6 +1,5 @@
 package model;
 
-import helper.IDanhSach;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,169 +7,155 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
-    Scanner sc= new Scanner(System.in);
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static final String TEN_FILE="PhieuNhapHang.txt";
-    private PhieuNhapHang[] pnh;
+public class DSCTPhieuNhapHang {
+    Scanner sc=new Scanner(System.in);
+    private static final String TEN_FILE="ChiTietPhieuNhapHang.txt";
+    private CTPhieuNhapHang[] chiTiet;
     private int n;
     
     //3 ham thiet lap
-    public DSPhieuNhapHang(){
-        pnh=new PhieuNhapHang[0];
+    public DSCTPhieuNhapHang(){
+        chiTiet=new CTPhieuNhapHang[0];
         n=0;
     }
-    public DSPhieuNhapHang(int n){
+    public DSCTPhieuNhapHang(int n){
         this.n=n;
-        pnh=new PhieuNhapHang[n];
+        chiTiet=new CTPhieuNhapHang[n];
     }
-    public DSPhieuNhapHang(DSPhieuNhapHang A){
-        pnh=new PhieuNhapHang[A.n];
+    public DSCTPhieuNhapHang(DSCTPhieuNhapHang A){
+        chiTiet=new CTPhieuNhapHang[A.n];
         n=A.n;
         for(int i=0;i<n;i++){
-            pnh[i]=new PhieuNhapHang(A.pnh[i]);
+            chiTiet[i]=new CTPhieuNhapHang(A.chiTiet[i]);
         }
     }
     
-    //cac ham them sua xoa
-    @Override
-    public boolean them(PhieuNhapHang A){
-        pnh=Arrays.copyOf(pnh,pnh.length+1);
-        pnh[n]=new PhieuNhapHang(A);
+    // ham them, sua, xoa
+    public void them(CTPhieuNhapHang ct){
+        chiTiet=Arrays.copyOf(chiTiet,chiTiet.length+1);
+        chiTiet[chiTiet.length-1]=new CTPhieuNhapHang(ct);
         n++;
-        return true;
     }
-    
-    public boolean them(){
-        PhieuNhapHang Y=new PhieuNhapHang();
-        System.out.print("Nhap ma phieu nhap hang:");
-        Y.setMaPNH(sc.nextLine());
-        if(findMaPNH(Y.getMaPNH())!=null){
-            System.out.println("Phieu nhap hang tren da ton tai!\nThem phieu khong thanh cong!");
+    public boolean them(String maPNH,DSSanPham dssp,DSPhieuNhapHang dspnh){
+        CTPhieuNhapHang x=new CTPhieuNhapHang();
+        x.setMaPNH(maPNH);
+        System.out.print("Nhap ma SP:");
+        x.setMaSP(sc.nextLine());
+        if(dssp.timTheoMa(x.getMaSP()) == null) {
+            System.out.println("Khong ton tai san pham!");
             return false;
         }
-        System.out.print("Nhap ma nhan vien");
-        Y.setMaNV(sc.nextLine());
-        System.out.print("Nhap ma nha cung cap:");
-        Y.setMaNCC(sc.nextLine());
-        System.out.print("Nhap ngay lap phieu (dd/MM/yyyy):");
-        LocalDate ngay = LocalDate.parse(sc.nextLine(), dtf);
-        Y.setNgayLap(ngay);
-        them(Y);
+        if(IfindChiTiet(x.getMaPNH(),x.getMaSP())!=-1){
+            System.out.println("Chi tiet nay da ton tai!");
+            System.out.println("Them chi tiet that bai!");
+            return false;
+        }
+        System.out.print("Nhap so luong nhap hang:");
+        x.setSoLuong(Integer.parseInt(sc.nextLine()));
+        System.out.print("Nhap don gia ban:");
+        x.setDonGia(Double.parseDouble(sc.nextLine()));
+        x.setThanhTien(x.getSoLuong(),x.getDonGia());
+        them(x);
+        dssp.timTheoMa(x.getMaSP()).nhaphang(x.getSoLuong());
+        System.out.println("Da them chi tiet thanh cong!");
         return true;
     }
-
-    @Override
-    public boolean xoa(String MaPNH){
-        int i=IfindMaPNH(MaPNH);
+    public boolean xoa(String maPNH,String maSP,DSSanPham dssp){
+        int i=IfindChiTiet(maPNH,maSP);
         if(i==-1){
-            System.out.println("Khong ton tai phieu nhap hang nay!");
-            System.out.println("Sua that bai!");
+            System.out.println("Khong hop le!");
             return false;
         }
+        SanPham x= dssp.timTheoMa(maSP);
+        x.setsoLuong(x.getSoLuong()-chiTiet[i].getSoLuong());
         for(int j=i;j<n-1;j++){
-            pnh[j]=pnh[j+1];
+            chiTiet[j]=chiTiet[j+1];
         }
         n--;
-        pnh=Arrays.copyOf(pnh, n);
-        System.out.println("Da xoa Phieu Nhap Hang co ma "+MaPNH);
+        chiTiet=Arrays.copyOf(chiTiet, n);
+        System.out.println("Da xoa chi tiet yeu cau.");
         return true;
     }
-    
-    @Override
-    public boolean sua(String MaPNH){
-        int i=IfindMaPNH(MaPNH);
+    public boolean sua(String maPNH,String maSP,DSSanPham dssp){
+        int i=IfindChiTiet(maPNH,maSP);
         if(i==-1){
-            System.out.println("Khong ton tai phieu nhap hang nay!");
-            System.out.println("Sua that bai!");
+            System.out.println("Khong tim thay chi tiet phieu nhap hang!");
             return false;
         }
-        System.out.println("Da tim thay Phieu Nhap Hang muon sua. Thong tin:");
-        System.out.println(pnh[i]);
-        System.out.println("\nHay chon muc muon sua:");
-        System.out.print("1.Ma Nha Cung Cap.\n2.Ma Nhan Vien.\n3.Ngay Lap Phieu.\n4.Chi Tiet Phieu Nhap Hang.\nChon:");
-        int q=sc.nextInt();
-        sc.nextLine();
-        switch(q){
-            case 1:System.out.print("Nhap Ma Nha Cung Cap Moi:");pnh[i].setMaNCC(sc.nextLine());break;
-            case 2:System.out.print("Nhap Ma Nhan Vien Moi:");pnh[i].setMaNV(sc.nextLine());break;
-            case 3:System.out.print("Nhap Ngay Lap Phieu Moi:");pnh[i].setNgayLap(LocalDate.parse(sc.nextLine(),dtf));break;                 
-            default:break;
-        }
+        System.out.println("Da tim thay chi tiet muon sua.Thong tin:");
+        System.out.println(chiTiet[i]);
+        System.out.println("Hay chon cho muon sua:");
+        System.out.print("1.So Luong.\n2.Don gia.\nChon:");
+        int chon;
+        do{
+            int q=Integer.parseInt(sc.nextLine());
+            SanPham X= dssp.timTheoMa(maSP);
+            switch(q){
+                case 1:
+                    int soLuongCu=chiTiet[i].getSoLuong();
+                    System.out.print("Nhap so luong moi:");
+                    chiTiet[i].setSoLuong(Integer.parseInt(sc.nextLine()));
+                    int soLuongMoi=chiTiet[i].getSoLuong();
+                    int chenhLech=soLuongMoi-soLuongCu;
+                    X.setsoLuong(X.getSoLuong()+chenhLech);
+                    break;
+                case 2:
+                    System.out.print("Nhap don gia moi:");
+                    chiTiet[i].setDonGia(Double.parseDouble(sc.nextLine()));
+                    break;
+                default:break;
+            }
+            System.out.print("Tiep tuc sua?( 1: Yes / 0: No )");
+            chon=Integer.parseInt(sc.nextLine());
+        }while(chon==1);
         System.out.println("Da sua thong tin thanh cong!");
         return true;
     }
     
-    //Cac ham tim kiem
-    //tim kiem theo ma phieu nhap hang
-    public PhieuNhapHang findMaPNH(String maPNH){
+    public DSCTPhieuNhapHang findPNH(String maPNH){
+        DSCTPhieuNhapHang x=new DSCTPhieuNhapHang();
         for(int i=0;i<n;i++){
-            if(pnh[i].getMaPNH().equals(maPNH)){
-                return pnh[i];
+            if(chiTiet[i].getMaPNH().equals(maPNH)){
+                x.them(chiTiet[i]);
             }
         }
-        return null;
+        return x;
     }
-    public int IfindMaPNH(String maPNH){
+    public DSCTPhieuNhapHang findSP(String maSP){
+        DSCTPhieuNhapHang x=new DSCTPhieuNhapHang();
         for(int i=0;i<n;i++){
-            if(pnh[i].getMaPNH().equals(maPNH)){
+            if(chiTiet[i].getMaSP().equals(maSP)){
+                x.them(chiTiet[i]);
+            }
+        }
+        return x;
+    }
+    public int IfindChiTiet(String maPNH,String maSP){
+        for(int i=0;i<n;i++){
+            if(chiTiet[i].getMaPNH().equals(maPNH)&&chiTiet[i].getMaSP().equals(maSP)){
                 return i;
             }
         }
         return -1;
     }
-    //tim kiem theo ma nha cung cap
-    public DSPhieuNhapHang findMaNCC(String maNCC){
-        DSPhieuNhapHang x=new DSPhieuNhapHang();
-        for(int i=0;i<n;i++){
-            if(pnh[i].getMaNCC().equals(maNCC)){
-                x.them(pnh[i]);
-            }
-        }
-        return x;
-    }
-    //tim kiem theo ma nhan vien
-    public DSPhieuNhapHang findMaNV(String maNV){
-        DSPhieuNhapHang x=new DSPhieuNhapHang();
-        for(int i=0;i<n;i++){
-            if(pnh[i].getMaNV().equals(maNV)){
-                x.them(pnh[i]);
-            }
-        }
-        return x;
-    }
-    //timkiem theo ngay lap phieu
-    public DSPhieuNhapHang findNgayLap(LocalDate ngay){
-        DSPhieuNhapHang x=new DSPhieuNhapHang();
-        for(int i=0;i<n;i++){
-            if(pnh[i].getNgayLap().equals(ngay)){
-                x.them(pnh[i]);
-            }
-        }
-        return x;
-    }
     
-    //cac ham thong ke
-    //thong ke so luong giao dich ung voi tung nha cung cap
-    public void thongkeNCC(){
-        System.out.println("=============THONG KE THEO NHA CUNG CAP=============");
-        System.out.printf("Ma Nha Cung Cap |So luong giao dich\n");
+    public void thongkeSoLuong(){
+        System.out.println("=============THONG KE SO LUONG CHI TIET THEO MA PHIEU NHAP HANG=============");
+        System.out.printf("Ma PNH |SL chi tiet\n");
         String[] ds=new String[0];
         int k=0;
         //tao mang khong trung
         for(int i=0;i<n;i++){
             boolean found=false;
             for(int j=0;j<k;j++){
-                if(ds[j].equals(pnh[i].getMaNCC())){
+                if(ds[j].equals(chiTiet[i].getMaPNH())){
                     found=true;
                     break;
                 }
             }
             if(!found){
                 ds=Arrays.copyOf(ds,ds.length+1);
-                ds[k]=pnh[i].getMaNCC();
+                ds[k]=chiTiet[i].getMaPNH();
                 k++;
             }
         }
@@ -178,161 +163,85 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
         for(int i=0;i<k;i++){
             int dem=0;
             for(int j=0;j<n;j++){
-                if(pnh[j].getMaNCC().equals(ds[i])){
+                if(chiTiet[j].getMaPNH().equals(ds[i])){
                     dem++;
                 }
             }
-            System.out.printf("%-16s|%18d\n",ds[i],dem);
+            System.out.printf("%-6s |%11d\n",ds[i],dem);
         }
     }
-    //tuong tu ham thong ke theo nha cung cap
-    public void thongkeNV(){
-        System.out.println("=============THONG KE THEO NHAN vIEN=============");
-        System.out.printf("Ma Nhan Vien |Thuc hien giao dich\n");
-        String[] ds=new String[0];
-        int k=0;
-        for(int i=0;i<n;i++){
-            boolean found=false;
-            for(int j=0;j<k;j++){
-                if(ds[j].equals(pnh[i].getMaNV())){
-                    found=true;
-                    break;
-                }
-            }
-            if(!found){
-                ds=Arrays.copyOf(ds,ds.length+1);
-                ds[k]=pnh[i].getMaNV();
-                k++;
-            }
-        }
-        for(int i=0;i<k;i++){
-            int dem=0;
-            for(int j=0;j<n;j++){
-                if(pnh[j].getMaNV().equals(ds[i])){
-                    dem++;
-                }
-            }
-            System.out.printf("%-13s|%19d\n",ds[i],dem);
-        }
+    //cac ham bo tro
+    public int getN(){
+        return n;
     }
-    //thong ke tong tien da chi tra cho tung nha cung cap
-    public void thongkeTongTienNCC(){
-        System.out.println("=============THONG KE TONG TIEN THEO NHA CUNG CAP=============");
-        System.out.printf("Ma Nha Cung Cap |Tong tien giao dich\n");
-        String[] ds=new String[0];
-        int k=0;
-        for(int i=0;i<n;i++){
-            boolean found=false;
-            for(int j=0;j<k;j++){
-                if(ds[j].equals(pnh[i].getMaNCC())){
-                    found=true;
-                    break;
-                }
-            }
-            if(!found){
-                ds=Arrays.copyOf(ds,ds.length+1);
-                ds[k]=pnh[i].getMaNCC();
-                k++;
-            }
+    public double tinhTongTien(){
+        double t=0;
+        for(CTPhieuNhapHang ct : chiTiet){
+            t+=ct.getThanhTien();
         }
-        for(int i=0;i<k;i++){
-            double tong=0;
-            for(int j=0;j<n;j++){
-                if(pnh[j].getMaNCC().equals(ds[i])){
-                    tong+=pnh[j].getTongTien();
-                }
-            }
-            System.out.printf("%-16s|%19f\n",ds[i],tong);
-        }
+        return t;
     }
-    //thong ke tong tien giao dich duoc nhan vien chiu trach nhiem lap phieu
-    public void thongkeTongTienNV(){
-        System.out.println("=============THONG KE TONG TIEN THEO NHAN VIEN=============");
-        System.out.printf("Ma Nhan Vien |Tong tien giao dich\n");
-        String[] ds=new String[0];
-        int k=0;
-        for(int i=0;i<n;i++){
-            boolean found=false;
-            for(int j=0;j<k;j++){
-                if(ds[j].equals(pnh[i].getMaNV())){
-                    found=true;
-                    break;
-                }
-            }
-            if(!found){
-                ds=Arrays.copyOf(ds,ds.length+1);
-                ds[k]=pnh[i].getMaNV();
-                k++;
-            }
-        }
-        for(int i=0;i<k;i++){
-            double tong=0;
-            for(int j=0;j<n;j++){
-                if(pnh[j].getMaNV().equals(ds[i])){
-                    tong+=pnh[j].getTongTien();
-                }
-            }
-            System.out.printf("%-13s|%19f\n",ds[i],tong);
-        }
+    public double tongTienPNH(String maPNH){
+        DSCTPhieuNhapHang x=findPNH(maPNH);
+        return x.tinhTongTien();
     }
-    
     //xuat thong tin
     // xuat thong tin
     public void xuat() {
-        System.out.println("\n========== DANH SACH PHIEU NHAP HANG ==========\n");
+        System.out.println("\n========== DANH SACH CHI TIET PHIEU NHAP HANG ==========\n");
         // Xac dinh do rong cac cot
         int stt = 3;
         int maPNH = "MA PNH".length();
-        int maNCC = "MA NCC".length();
-        int maNV = "MA NV".length();
-        int ngayLap = "NGAY LAP".length();
-        int tongTien = "TONG TIEN".length();
+        int maSP = "MA SP".length();
+        int soLuong = "SO LUONG".length();
+        int donGia = "DON GIA".length();
+        int thanhTien = "THANH TIEN".length();
         for (int i = 0; i < n; i++) {
-            maPNH = Math.max(maPNH, pnh[i].getMaPNH().length());
-            maNCC = Math.max(maNCC, pnh[i].getMaNCC().length());
-            maNV = Math.max(maNV, pnh[i].getMaNV().length());
-            ngayLap = Math.max(ngayLap,pnh[i].getNgayLap().format(dtf).length());
-            tongTien = Math.max(tongTien,String.valueOf(pnh[i].getTongTien()).length());
+            maPNH = Math.max(maPNH, chiTiet[i].getMaPNH().length());
+            maSP = Math.max(maSP, chiTiet[i].getMaSP().length());
+            soLuong = Math.max(soLuong,String.valueOf(chiTiet[i].getSoLuong()).length());
+            donGia = Math.max(donGia,String.valueOf(chiTiet[i].getDonGia()).length());
+            thanhTien = Math.max(thanhTien,String.valueOf(chiTiet[i].getThanhTien()).length());
             stt = Math.max(stt, String.valueOf(i + 1).length());
         }
         // In tieu de cot
         System.out.printf("%-" + (stt + 3) + "s", "STT");
         System.out.printf("%-" + (maPNH + 3) + "s", "MA PNH");
-        System.out.printf("%-" + (maNCC + 3) + "s", "MA NCC");
-        System.out.printf("%-" + (maNV + 3) + "s", "MA NV");
-        System.out.printf("%-" + (ngayLap + 3) + "s", "NGAY LAP");
-        System.out.printf("%s\n", "TONG TIEN");
+        System.out.printf("%-" + (maSP + 3) + "s", "MA SP");
+        System.out.printf("%-" + (soLuong + 3) + "s", "SO LUONG");
+        System.out.printf("%-" + (donGia + 3) + "s", "DON GIA");
+        System.out.printf("%s\n", "THANH TIEN");
         // Tinh do dai duong ke
-        int tong = stt + maPNH + maNCC + maNV + ngayLap + tongTien + 15;
+        int tong = stt + maPNH + maSP + soLuong + donGia + thanhTien + 15;
         System.out.println("-".repeat(tong));
         // In danh sach
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + (stt + 3) + "s", i + 1);
-            System.out.printf("%-" + (maPNH + 3) + "s", pnh[i].getMaPNH());
-            System.out.printf("%-" + (maNCC + 3) + "s", pnh[i].getMaNCC());
-            System.out.printf("%-" + (maNV + 3) + "s", pnh[i].getMaNV());
-            System.out.printf("%-" + (ngayLap + 3) + "s",pnh[i].getNgayLap().format(dtf));
-            System.out.printf("%.2f\n", pnh[i].getTongTien());
+            System.out.printf("%-" + (maPNH + 3) + "s", chiTiet[i].getMaPNH());
+            System.out.printf("%-" + (maSP + 3) + "s", chiTiet[i].getMaSP());
+            System.out.printf("%-" + (soLuong + 3) + "s",chiTiet[i].getSoLuong());
+            System.out.printf("%-" + (donGia + 3) + "s",String.format("%.2f", chiTiet[i].getDonGia()));
+            System.out.printf("%.2f\n", chiTiet[i].getThanhTien());
         }
         System.out.println("-".repeat(tong));
-        System.out.println("Tong so phieu nhap hang: " + n);
+        System.out.println("Tong so chi tiet: " + n);
     }
     public void docFile() {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(TEN_FILE));
             String dong;
-            pnh=new PhieuNhapHang[0];
+            chiTiet=new CTPhieuNhapHang[0];
             n = 0;
             while ((dong = br.readLine()) != null) {
                 if (!dong.trim().isEmpty()) {
-                    pnh=Arrays.copyOf(pnh,n+1);
-                    pnh[n] = PhieuNhapHang.fromFileString(dong);
+                    chiTiet=Arrays.copyOf(chiTiet, n+1);
+                    chiTiet[n] = CTPhieuNhapHang.fromFileString(dong);
                     n++;
                 }
             }
         } catch (IOException e) {
-            System.out.println("Loi doc file phieu nhap hang!");
+            System.out.println("Loi doc file chi tiet PNH!");
             System.out.println(e.getMessage());
 
         } finally {
@@ -341,7 +250,7 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
                     br.close();
                 }
             } catch (IOException e) {
-                System.out.println("Loi dong file phieu nhap hang!");
+                System.out.println("Loi dong file chi tiet PNH!");
             }
         }
     }
@@ -350,11 +259,11 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
         try{
             bw=new BufferedWriter(new FileWriter(TEN_FILE));
             for(int i=0;i<n;i++){
-                bw.write(pnh[i].toFileString());
+                bw.write(chiTiet[i].toFileString());
                 bw.newLine();
             }
         }catch(IOException e){
-            System.out.println("Loi doc file phieu nhap hang!");
+            System.out.println("Loi doc file chi tiet PNH!");
             System.out.println(e.getMessage());
         }finally{
             try{
@@ -362,7 +271,7 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
                     bw.close();
                 }
             }catch(IOException e){
-                System.out.println("Loi dong file phieu nhap hang!");
+                System.out.println("Loi dong file chi tiet PNH!");
             }
         }
     }

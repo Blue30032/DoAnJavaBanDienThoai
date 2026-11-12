@@ -21,12 +21,12 @@ public class DSSanPham implements IDocGhiFile {
     // constructor 
     public DSSanPham()
     {
-        int n=0;
+        n=0;
         ds = new SanPham[SUC_CHUA_BAN_DAU];
     }
     public DSSanPham(int sucChua)
     {
-        int n = 0;
+        n = 0;
         ds = new SanPham[sucChua > 0 ? sucChua : SUC_CHUA_BAN_DAU];
     }
     // --- truy  xuất---
@@ -59,11 +59,10 @@ public class DSSanPham implements IDocGhiFile {
     {
         if(sp==null || timViTri(sp.getMaSP()) !=-1)
             return false; 
-        if(n == ds.length) ds = Arrays.copyOf(ds, ds.length *2 ); // cấp phát thêm mảng động gấp đôi nếu mảng mảng đầy
-        {
-            ds[n++] = sp;
-            return true;
-        }   
+        if(n == ds.length) 
+            ds = Arrays.copyOf(ds, ds.length *2 ); // cấp phát thêm mảng động gấp đôi nếu mảng mảng đầy
+        ds[n++] = sp;
+        return true;
     }
     // Nhập sản phẩm IOS or android vào để thêm vào ds . trả về true nếu thêm thành công
     public boolean nhapSanPham()
@@ -114,7 +113,9 @@ public class DSSanPham implements IDocGhiFile {
     public DSSanPham timkiemTen(String TenSP)
     {
         DSSanPham kq = new DSSanPham();
-        String k = (TenSP == null) ? "" : TenSP.trim().toLowerCase();
+        if (tenSP == null || tenSP.trim().isEmpty())
+        return kq;
+        String k = tenSP.trim().toLowerCase();
         for(int i=0;i<n;i++)
         {
             if(ds[i].getTenSP().toLowerCase().contains(k))
@@ -128,7 +129,9 @@ public class DSSanPham implements IDocGhiFile {
     public DSSanPham timkiemHang(String hang)
     {
         DSSanPham kq = new DSSanPham();
-        String k = (hang == null) ? "" : hang.trim().toLowerCase();
+        if (hang == null || hang.trim().isEmpty())
+        return kq;
+        String k = hang.trim().toLowerCase();
         for(int i=0;i<n;i++)
         {
             if(ds[i].getHang().toLowerCase().contains(k))

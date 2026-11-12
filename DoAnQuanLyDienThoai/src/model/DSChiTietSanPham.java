@@ -74,6 +74,8 @@ public class DSChiTietSanPham implements IDocGhiFile{
     }
     public DSChiTietSanPham timTheoHang(String hang) {
         DSChiTietSanPham kq = new DSChiTietSanPham();
+         if (hang == null || hang.trim().isEmpty())
+        return kq;
         for (int i = 0; i < n; i++) if (ds[i].getHang().equalsIgnoreCase(hang.trim())) kq.them(ds[i]);
         return kq;
     }

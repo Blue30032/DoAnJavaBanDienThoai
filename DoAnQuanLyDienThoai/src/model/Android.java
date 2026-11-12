@@ -19,7 +19,7 @@ public class Android extends SanPham {
         {"Honor", "honor"},
         {"Nokia", "nokia"}
     };
-    private boolean butCamUng, congHongNgoai;
+    private boolean Butcamung, Conghongngoai;
     //constructor
     public Android()
     {
@@ -28,9 +28,9 @@ public class Android extends SanPham {
         Conghongngoai = false;
     }
     public Android(String maSP, String tenSP, int soLuong, double donGia, String mauSac,
-                   boolean butCamUng, boolean congHongNgoai) {
+                   boolean Butcamung, boolean Conghongngoai) {
         super(maSP, tenSP, soLuong, donGia, mauSac);
-        this.butCamUng = butCamUng; this.congHongNgoai = congHongNgoai;
+        this.Butcamung = Butcamung; this.Conghongngoai = Conghongngoai;
     }
     //get 
     public boolean IsButcamung()
@@ -75,7 +75,7 @@ public class Android extends SanPham {
     @Override 
     public boolean HangPro_ultra()
     {
-        return Butcamung || tenChua("utra") || tenChua("pro") || tenChua("flip");
+        return Butcamung || tenChua("ultra") || tenChua("pro") || tenChua("flip");
     }
     @Override 
     public double Giabanle()
@@ -83,7 +83,7 @@ public class Android extends SanPham {
         double tyle =0;
         if(HangPro_ultra())
         {
-            tyle=getHang().equals("SamSung") ? Phu_Thu_SamSung_Utra : Phu_Thu_Hang_Khac_Pro;
+            tyle=getHang().equals("Samsung") ? Phu_Thu_SamSung_Utra : Phu_Thu_Hang_Khac_Pro;
         }
         return getDonGia()*(1+tyle);
     }

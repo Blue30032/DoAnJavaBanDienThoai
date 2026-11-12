@@ -138,6 +138,29 @@ public class DSCTPhieuNhapHang {
         }
         return -1;
     }
+    public DSCTPhieuNhapHang findThanhTien(double thanhtien){
+        DSCTPhieuNhapHang x=new DSCTPhieuNhapHang();
+        //khiem tra so tien dang tim co hop le khong
+        double max=0;
+        double temp=0;
+        for(int i=0;i<n;i++){
+            temp=chiTiet[i].getThanhTien();
+            if(max<temp){
+                max=temp;
+            }
+        }
+        if(thanhtien>max){
+            return null;
+        }
+        for(int i=0;i<n;i++){
+            temp=chiTiet[i].getThanhTien();
+            if(thanhtien<=temp){
+                x.them(chiTiet[i]);
+            }
+        }
+        return x;
+    }
+    
     public void thongkeSoLuong(){
         System.out.println("=============THONG KE SO LUONG CHI TIET THEO MA PHIEU NHAP HANG=============");
         System.out.printf("Ma PNH |SL chi tiet\n");

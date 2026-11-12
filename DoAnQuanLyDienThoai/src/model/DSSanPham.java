@@ -113,9 +113,9 @@ public class DSSanPham implements IDocGhiFile {
     public DSSanPham timkiemTen(String TenSP)
     {
         DSSanPham kq = new DSSanPham();
-        if (tenSP == null || tenSP.trim().isEmpty())
+        if (TenSP == null || TenSP.trim().isEmpty())
         return kq;
-        String k = tenSP.trim().toLowerCase();
+        String k = TenSP.trim().toLowerCase();
         for(int i=0;i<n;i++)
         {
             if(ds[i].getTenSP().toLowerCase().contains(k))

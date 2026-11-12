@@ -162,8 +162,16 @@ public class ChiTietSanPham implements Serializable {
         /*String maSP, String heDieuHanh, int dungLuong, int ram, String hang,
         String chip, double manHinh, int pin, int doPhanGiaiCamera,
         String congSac, String chatLieu) cần đủ các đối tượng mới tạo dc chi tiết sản phẩm */
-        return new ChiTietSanPham(p[1].trim(),p[2].trim(),Integer.parseInt(p[3].trim()),Integer.parseInt(p[4].trim()),
-                                    p[5].trim(),p[6].trim(),Double.parseDouble(p[7].trim()),Integer.parseInt(p[8].trim()),
-                                    Integer.parseInt(p[9].trim()),p[10].trim(),p[11].trim());
+        return new ChiTietSanPham(p[0].trim(),
+        p[1].trim(),
+        Integer.parseInt(p[2].trim()),
+        Integer.parseInt(p[3].trim()),
+        p[4].trim(),
+        p[5].trim(),
+        Double.parseDouble(p[6].trim()),
+        Integer.parseInt(p[7].trim()),
+        Integer.parseInt(p[8].trim()),
+        p[9].trim(),
+        p[10].trim());
     } 
 }

@@ -23,7 +23,7 @@ public class QLDSSP {
                 case 3:xoa(); break;
                 case 4:sua(); break;
                 case 5:timKiem(); break;
-                case 6:dssp.sapxepTheoGiaBanle(); System.out.println("Da sap xep xong."); dssp.xuatDanhSach();
+                case 6:dssp.sapxepTheoGiaBanle(); System.out.println("Da sap xep xong."); dssp.xuatDanhSach(); break;
                 case 7:thongKe(); break;
                 case 8:menuChiTiet(); break;
                 default: break;
@@ -44,6 +44,10 @@ public class QLDSSP {
     {
         String ma = Nhaplieu.docChuoi("Nhap maSP can xoa");
         SanPham sp = dssp.timTheoMa(ma);
+        if (sp == null) {
+        System.out.println("Không tìm thấy sản phẩm.");
+        return;
+        }
         sp.xuat();
         if (Nhaplieu.xacNhan("Xác nhận xóa")) // hàm boolean nhập "có" nếu muốn xóa chi tiết và sản phẩm
         {

@@ -1,16 +1,15 @@
 package model;
 import java.util.Arrays;
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import helper.IDocGhiFile;
 import helper.Nhaplieu;
 
 public class DSChiTietSanPham implements IDocGhiFile{
+    public static final String TEN_FILE = "ChiTietSanPham.txt";
     private ChiTietSanPham[] ds;
     private int n;
     private static final int BanDau  =10; // biến static giá trị ban đầu của mảng 
@@ -161,29 +160,22 @@ public class DSChiTietSanPham implements IDocGhiFile{
             System.out.println("Khong co san pham nao co dung luong nay.");
     }
     /* Phương thức đọc và ghi file */
-    @Override
+  @Override
     public boolean ghiFile(String tenFile)
     {
         try {
-
-            Path path = Paths.get(tenFile); // hàm tự tạo thư mục file text
-
-            // Tạo thư mục cha nếu chưa tồn tại
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
-            }
-        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(tenFile),StandardCharsets.UTF_8))
-        {
-            for(int i=0;i<n;i++)
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile)))
             {
-                bw.write(ds[i].toDongFile()); 
-                bw.newLine(); // ghi tết tất cả nôi dụng chi tiết vào 1 dòng rồi tạo thêm dòng mới cho đến hết
+                for(int i=0;i<n;i++)
+                {
+                    bw.write(ds[i].toDongFile()); 
+                    bw.newLine(); // ghi tết tất cả nôi dụng chi tiết vào 1 dòng rồi tạo thêm dòng mới cho đến hết
+                }
             }
-        }
         return true;
     }
      catch(IOException e){
-            System.out.println("Lỗi ghi file "+ tenFile+ ": " +e.getMessage());
+            System.out.println("Loi ghi file "+ tenFile+ ": " +e.getMessage());
             return false;
         }
     }
@@ -191,7 +183,7 @@ public class DSChiTietSanPham implements IDocGhiFile{
     public boolean docFile(String tenFile)
     {
         DSChiTietSanPham temp = new DSChiTietSanPham();
-        try(BufferedReader br = Files.newBufferedReader(Paths.get(tenFile),StandardCharsets.UTF_8))
+        try(BufferedReader br = new BufferedReader(new FileReader(tenFile)))
         {
             String dong;
             int lineNumber=0;
@@ -203,16 +195,16 @@ public class DSChiTietSanPham implements IDocGhiFile{
                 try{
                     if(!temp.them(ChiTietSanPham.tuDongFile(dong))) // thêm các đối tượng vào biến tạm 
                     {
-                        System.out.println("Dòng "+ lineNumber +" : Mã sản phẩm đã tồn tại, bỏ qua");
+                        System.out.println("Dong "+ lineNumber +" : Ma san pham da ton tai, bo qua");
                     }
                 }catch(RuntimeException e)
                 {
-                    System.out.println("Dòng "+lineNumber+" : Lỗi dữ liệu, bỏ qua: "+e.getMessage());
+                    System.out.println("Dong "+lineNumber+" : Loi du lieu, bo qua: "+e.getMessage());
                 }
             }
         } catch(IOException e)
         {
-            System.out.println("Lỗi đọc file "+tenFile+": "+e.getMessage());
+            System.out.println("Loi doc file "+tenFile+": "+e.getMessage());
             return false;
         }
         // Chỉ thay danh sách hiện tại sau khi đọc file thành công
@@ -221,3 +213,4 @@ public class DSChiTietSanPham implements IDocGhiFile{
         return true;  
     }
 }
+

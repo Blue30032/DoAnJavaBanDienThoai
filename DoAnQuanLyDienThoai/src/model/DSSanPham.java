@@ -1,18 +1,17 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import helper.IDocGhiFile;
 import helper.Nhaplieu;
 
 
 public class DSSanPham implements IDocGhiFile {
+    public static final String TEN_FILE = "SanPham.txt";
     // Sức chứa ban đầu của mảng
     private static final int SUC_CHUA_BAN_DAU = 10;
 
@@ -320,29 +319,22 @@ public class DSSanPham implements IDocGhiFile {
         System.out.printf("Tổng giá trị tồn kho (theo giá bán lẻ): %,.0f%n", giaTriTon);
     }
     /*Đọc và Ghi file */
-    @Override 
+   @Override 
     public boolean ghiFile(String tenFile)
     {
         try {
-
-            Path path = Paths.get(tenFile); // hàm tự tạo thư mục file text
-
-            // Tạo thư mục cha nếu chưa tồn tại
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
-            }
-        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(tenFile),StandardCharsets.UTF_8))
-        {
-            for(int i=0;i<n;i++)
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile)))
             {
-                bw.write(ds[i].toDongFile()); 
-                bw.newLine(); // ghi tết tất cả nôi dụng chi tiết vào 1 dòng rồi tạo thêm dòng mới cho đến hết
+                for(int i=0;i<n;i++)
+                {
+                    bw.write(ds[i].toDongFile()); 
+                    bw.newLine(); // ghi tết tất cả nôi dụng chi tiết vào 1 dòng rồi tạo thêm dòng mới cho đến hết
+                }
             }
-        }
         return true;
-    }
+        }
      catch(IOException e){
-            System.out.println("Lỗi ghi file "+ tenFile+ ": " +e.getMessage());
+            System.out.println("Loi ghi file "+ tenFile+ ": " +e.getMessage());
             return false;
     }
 }
@@ -351,7 +343,7 @@ public class DSSanPham implements IDocGhiFile {
     public boolean docFile(String tenFile)
     {
         DSSanPham temp = new DSSanPham();
-        try(BufferedReader br = Files.newBufferedReader(Paths.get(tenFile),StandardCharsets.UTF_8))
+        try(BufferedReader br = new BufferedReader(new FileReader(tenFile)))
         {
             String dong;
             int lineNumber = 0;
@@ -362,16 +354,16 @@ public class DSSanPham implements IDocGhiFile {
                 try{
                     if(!temp.them(taoTuDong(dong)))
                     {
-                        System.out.println("Dòng "+lineNumber+" : Mã sản phẩm đã tồn tại, bỏ qua");
+                        System.out.println("Dong "+lineNumber+" : Ma san pham da ton tai, bo qua");
                     }
                 } catch(RuntimeException e)
                 {
-                    System.out.println("Dòng "+lineNumber+" : Lỗi dữ liệu, bỏ qua: "+e.getMessage());
+                    System.out.println("Dong "+lineNumber+" : Loi du lieu, bo qua: "+e.getMessage());
                 }
             }
         } catch(IOException e)
         {
-            System.out.println("Lỗi đọc file "+tenFile+": "+e.getMessage());
+            System.out.println("Loi doc file "+tenFile+": "+e.getMessage());
             return false;
         }
         this.ds=temp.ds;
@@ -387,7 +379,7 @@ public class DSSanPham implements IDocGhiFile {
             case "IOS":
                 if(p.length!=7)
                 {
-                    throw new IllegalArgumentException("Dữ liệu IOS không hợp lệ cần 7 Đối tượng");
+                    throw new IllegalArgumentException("Du lieu IOS khong hop le can 7 Doi tuong");
                 }
                 return new IOS(p[1].trim(),p[2].trim()
                     ,Integer.parseInt(p[3].trim()),
@@ -396,14 +388,14 @@ public class DSSanPham implements IDocGhiFile {
             case "ANDROID":
                 if(p.length!=8)
                 {
-                    throw new IllegalArgumentException("Dữ liệu Android không hợp lệ cần 8 Đối tượng");
+                    throw new IllegalArgumentException("Du lieu Android khong hop le can 8 Doi tuong");
                 }
                 return new Android(p[1].trim(),p[2].trim()
                     ,Integer.parseInt(p[3].trim()),
                     Double.parseDouble(p[4].trim())
                     ,p[5].trim(),Boolean.parseBoolean(p[6].trim()),Boolean.parseBoolean(p[7].trim())); // tạo constructor android từ các đối tượng trong mảng p   
             default:
-                throw new IllegalArgumentException("Loại sản phẩm không hợp lệ: " +p[0]);
+                throw new IllegalArgumentException("Loai san pham khong hop le: " +p[0]);
         }
     }
 }

@@ -31,7 +31,7 @@ public abstract class SanPham implements Serializable {
     }
     public SanPham(String maSP, String tenSP, int soLuong, double donGia, String mauSac) {
         setmaSP(maSP);
-        setTenSP(tenSp);
+        setTenSP(tenSP);
         setsoLuong(soLuong);
         setdongia(donGia);
         setMausac(mauSac);

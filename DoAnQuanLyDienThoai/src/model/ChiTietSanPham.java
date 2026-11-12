@@ -105,22 +105,22 @@ public class ChiTietSanPham implements Serializable {
     /** Nhập chi tiết từ bàn phím. Mã SP phải trùng mã của sản phẩm tương ứng. */
     public void nhap() {
         System.out.println("--- Nhap chi tiet san pham ---");
-        setMaSP(NhapLieu.docChuoi("Nhap maSP (MASP phai trung voi ma cua SAN PHAM)"));
+        setMaSP(Nhaplieu.docChuoi("Nhap maSP (MASP phai trung voi ma cua SAN PHAM)"));
         nhapThongSo();
     }
 
     /** Nhập các thông số kỹ thuật (mã SP đã được đặt trước). */
     public void nhapThongSo() {
-        setHeDieuHanh(NhapLieu.docChuoi("He dieu hanh"));
-        setDungLuong(NhapLieu.docSoNguyen("Dung Luong bo nho (GB)", 1));
-        setRam(NhapLieu.docSoNguyen("RAM (GB)", 1));
-        setHang(NhapLieu.docChuoi("Hang"));
-        setChip(NhapLieu.docChuoi("Chip"));
-        setManHinh(NhapLieu.docSoThuc("Man hinh (inch)", 0.1));
-        setPin(NhapLieu.docSoNguyen("Pin (mAh)", 1));
-        setDoPhanGiaiCamera(NhapLieu.docSoNguyen("Đo phan giai camera (MP)", 1));
-        setCongSac(NhapLieu.docChuoi("Cong sac"));
-        setChatLieu(NhapLieu.docChuoi("Chat lieu"));
+        setHeDieuHanh(Nhaplieu.docChuoi("He dieu hanh"));
+        setDungLuong(Nhaplieu.docSoNguyen("Dung Luong bo nho (GB)", 1));
+        setRam(Nhaplieu.docSoNguyen("RAM (GB)", 1));
+        setHang(Nhaplieu.docChuoi("Hang"));
+        setChip(Nhaplieu.docChuoi("Chip"));
+        setManHinh(Nhaplieu.docSoThuc("Man hinh (inch)", 0.1));
+        setPin(Nhaplieu.docSoNguyen("Pin (mAh)", 1));
+        setDoPhanGiaiCamera(Nhaplieu.docSoNguyen("Đo phan giai camera (MP)", 1));
+        setCongSac(Nhaplieu.docChuoi("Cong sac"));
+        setChatLieu(Nhaplieu.docChuoi("Chat lieu"));
     }
 
     /** Xuất chi tiết nhiều dòng cho dễ đọc. */
@@ -153,7 +153,7 @@ public class ChiTietSanPham implements Serializable {
     }
     public static ChiTietSanPham tuDongFile(String dong)
     {
-        String[] p = dong.split("\\|,-1");
+        String[] p = dong.split("\\|,-1); //tách chuỗi tại dấu |. giữ lại cả những phần tử rỗng ở cuối chuỗi.
         String loai = p[0].trim().toUpperCase();
         if(p.length!=11)
         {

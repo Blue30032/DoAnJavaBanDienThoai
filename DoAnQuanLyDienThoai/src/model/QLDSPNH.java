@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 public class QLDSPNH extends QuanLy {
     DSPhieuNhapHang dsPNH= new DSPhieuNhapHang();
-    DSCTPhieuNhapHang dsCT= new DSCTPhieuNhapHang();
+    DSCTPhieuNhapHang dsCTPNH= new DSCTPhieuNhapHang();
     DSNhaCungCap dsNCC= new DSNhaCungCap();
     DSNV dsNV=new DSNV();
     DSSanPham dsSP=new DSSanPham();
@@ -89,7 +89,7 @@ public class QLDSPNH extends QuanLy {
                     System.out.print("Nhap so luong chi tiet PNH:");
                     int n=Integer.parseInt(sc.nextLine());
                     while(n>0){
-                        if(dsCT.them(maPNH,dsSP,dsPNH)){
+                        if(dsCTPNH.them(maPNH,dsSP,dsPNH)){
                             n--;
                         }
                         else{
@@ -97,7 +97,7 @@ public class QLDSPNH extends QuanLy {
                         }
                     }
                     PhieuNhapHang x=new PhieuNhapHang(maPNH,maNCC,maNV,ngay,0);
-                    x.setTongTien(dsCT);
+                    x.setTongTien(dsCTPNH);
                     dsPNH.them(x);
                     break;
                 case 3:
@@ -168,13 +168,14 @@ public class QLDSPNH extends QuanLy {
             System.out.println("4. Xoa chi tiet phieu nhap hang");
             System.out.println("5. Tim chi tiet phieu nhap theo ma phieu nhap hang");
             System.out.println("6. Tim chi tiet phieu nhap theo ma san pham");
-            System.out.println("7. Thong ke so luong theo ma phieu nhap hang");
+            System.out.println("7. Tim chi tiet phieu nhap theo thanh tien");
+            System.out.println("8. Thong ke so luong theo ma phieu nhap hang");
             System.out.println("0. Thoat");
             System.out.print("Chon: ");
             chon=Integer.parseInt(sc.nextLine());
             switch(chon){
                 case 1:
-                    dsCT.xuat();
+                    dsCTPNH.xuat();
                     break;
                 case 2:
                     System.out.print("Nhap ma PNH:");
@@ -196,34 +197,38 @@ public class QLDSPNH extends QuanLy {
                     System.out.print("Nhap don gia:");
                     double donGia = Double.parseDouble(sc.nextLine());
                     CTPhieuNhapHang x=new CTPhieuNhapHang(maPNH,maSP,soLuong,donGia);
-                    dsCT.them(x);
+                    dsCTPNH.them(x);
                     break;
                 case 3:
                     System.out.print("Nhap ma PNH:");
                     String pn=sc.nextLine();
                     System.out.print("Nhap ma SP:");
                     String sp=sc.nextLine();
-                    dsCT.sua(pn,sp,dsSP);
+                    dsCTPNH.sua(pn,sp,dsSP);
                     break;
                 case 4:
                     System.out.print("Nhap ma PNH:");
                     String Pn=sc.nextLine();
                     System.out.print("Nhap ma SP:");
                     String Sp=sc.nextLine();
-                    dsCT.xoa(Pn,Sp,dsSP);
+                    dsCTPNH.xoa(Pn,Sp,dsSP);
                     break;
                 case 5:
                     System.out.print("Nhap ma PNH:");
                     String PN=sc.nextLine();
-                    dsCT.findPNH(PN).xuat();
+                    dsCTPNH.findPNH(PN).xuat();
                     break;
                 case 6:
                     System.out.print("Nhap ma SP:");
                     String SP=sc.nextLine();
-                    dsCT.findSP(SP).xuat();
+                    dsCTPNH.findSP(SP).xuat();
                     break;
                 case 7:
-                    dsCT.thongkeSoLuong();
+                    System.out.print("Nhap thanh tien:");
+                    double thanhTien=Double.parseDouble(sc.nextLine());
+                    dsCTPNH.findThanhTien(thanhTien).xuat();
+                case 8:
+                    dsCTPNH.thongkeSoLuong();
                     break;
                 case 0:
                     System.out.println("Ket thuc chuong trinh!");

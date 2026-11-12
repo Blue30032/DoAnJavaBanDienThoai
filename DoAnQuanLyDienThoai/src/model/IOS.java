@@ -1,6 +1,6 @@
 package model;
 import helper.Nhaplieu;
-/** Sản phẩm chạy iOS: có thêm Apple Pencil (Yes/No). */
+/** Sản phẩm chạy iOS: có thêm tính năng Apple ProRes */
 public class IOS extends SanPham {
     private static final long serialVersionUID = 1L;
     // dòng pro phụ thu thêm 0.03 vào khi tính sản phẩm bán lẻ

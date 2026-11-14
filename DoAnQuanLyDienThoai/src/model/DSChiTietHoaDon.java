@@ -5,8 +5,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
 
-public class DSChiTietHoaDon {
+public class DSChiTietHoaDon implements Iterable<CTHoaDon> {
     private CTHoaDon[] ds;
     private int n;
     private static final int MAX = 1000;
@@ -34,6 +36,15 @@ public class DSChiTietHoaDon {
 
     public int getN() {
         return n;
+    }
+
+    public boolean isEmpty() {
+        return n == 0;
+    }
+
+    @Override
+    public Iterator<CTHoaDon> iterator() {
+        return Arrays.asList(ds).subList(0, n).iterator();
     }
 
     public CTHoaDon[] getDs() {

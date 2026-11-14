@@ -8,7 +8,7 @@ public abstract class SanPham implements Serializable {
     private String maSP, tenSP, mauSac;
     private int soLuong; 
     private double donGia;
-    /*thuộc tính static: đếm số lần tạo đối tượng SanPham đã được tạo ra */
+    /*thuộc tính static: đếm số đối tượng sản phẩm đấ được tạo ra */
     private static int tongSanPham = 0; 
     // constructor
     public SanPham() 
@@ -41,6 +41,12 @@ public abstract class SanPham implements Serializable {
     public String getMaSP() { return maSP; }
     public String getTenSP() { return tenSP; }
     public int getSoLuong() { return soLuong; }
+    public void setSoLuong(int soLuong) {
+        if (soLuong < 0) {
+            throw new IllegalArgumentException("So luong khong the am!");
+        }
+        this.soLuong = soLuong;
+    }
     public double getDonGia() { return donGia; }
     public String getMauSac() { return mauSac; }
     //set

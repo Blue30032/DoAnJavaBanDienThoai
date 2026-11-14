@@ -59,6 +59,18 @@ public class KhachHang extends Nguoi {
         return TongTien;
     }
 
+    public double getTongTienDaMua() {
+        return TongTien;
+    }
+
+    public void setTongTienDaMua(double tien) {
+        setTongTien(tien);
+    }
+
+    public KhachHang(String maKH, String tenKH, String gtinhKH, String sdtKH) {
+        this(maKH, "", tenKH, gtinhKH, sdtKH, 0);
+    }
+
     public void setTongTien(double TongTien) {
         if (TongTien >= 0) {
             this.TongTien = TongTien;

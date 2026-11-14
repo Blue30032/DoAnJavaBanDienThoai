@@ -1,5 +1,5 @@
 
-package DoAnBanDienThoai;
+package model;
 
 import java.io.IOException;
 import java.time.LocalDate;

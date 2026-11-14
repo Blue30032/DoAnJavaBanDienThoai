@@ -9,6 +9,7 @@ public class HoaDon {
     private String maKH;
     private LocalDate ngayLap;
     private double tongTien;
+    private DSChiTietHoaDon chiTiet = new DSChiTietHoaDon();
 
     public HoaDon() {
         maHD = "";
@@ -24,6 +25,18 @@ public class HoaDon {
         this.maKH = maKH;
         this.ngayLap = ngayLap;
         this.tongTien = 0;
+    }
+
+    public DSChiTietHoaDon getChiTiet() {
+        return chiTiet;
+    }
+
+    public void themCT(CTHoaDon ct) {
+        chiTiet.them(ct);
+        tongTien = 0;
+        for (CTHoaDon item : chiTiet.getDs()) {
+            tongTien += item.getThanhTien();
+        }
     }
 
     public HoaDon(String maHD, String maNV, String maKH,

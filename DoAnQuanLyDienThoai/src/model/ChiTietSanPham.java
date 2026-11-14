@@ -48,6 +48,21 @@ public class ChiTietSanPham implements Serializable {
         setChatLieu(chatLieu);
     }
 
+    public ChiTietSanPham(String maSP, String heDieuHanh, int dungLuong, int ram, String hang,
+                          String chip, String manHinh, int pin, String camera,
+                          String congSac, String chatLieu) {
+        this(maSP, heDieuHanh, dungLuong, ram, hang, chip,
+                parseManHinh(manHinh), pin, parseCamera(camera), congSac, chatLieu);
+    }
+
+    private static double parseManHinh(String value) {
+        return Double.parseDouble(value.replaceAll("[^0-9.]", ""));
+    }
+
+    private static int parseCamera(String value) {
+        return Integer.parseInt(value.replaceAll("[^0-9]", ""));
+    }
+
     //get
     public String getMaSP() { return maSP; }
     public String getHeDieuHanh() { return heDieuHanh; }

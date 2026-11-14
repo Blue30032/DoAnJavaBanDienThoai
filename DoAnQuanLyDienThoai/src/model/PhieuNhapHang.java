@@ -11,6 +11,7 @@ public class PhieuNhapHang {
     private String maNV;
     private LocalDate ngayLap;
     private double tongTien;
+    private DSCTPhieuNhapHang chiTiet = new DSCTPhieuNhapHang();
     
     //3 ham thiet lap
     public PhieuNhapHang(){
@@ -26,6 +27,10 @@ public class PhieuNhapHang {
         this.maNV=maNV;
         this.ngayLap=ngayLap;
         this.tongTien=tongTien;
+    }
+
+    public PhieuNhapHang(String maPNH, String maNCC, String maNV, LocalDate ngayLap) {
+        this(maPNH, maNCC, maNV, ngayLap, 0);
     }
     public PhieuNhapHang(PhieuNhapHang A){
         maPNH=A.maPNH;
@@ -79,6 +84,15 @@ public class PhieuNhapHang {
     }
     public double getTongTien(){
         return tongTien;
+    }
+
+    public DSCTPhieuNhapHang getChiTiet() {
+        return chiTiet;
+    }
+
+    public void themCT(CTPhieuNhapHang ct) {
+        chiTiet.them(ct);
+        tongTien = chiTiet.tinhTongTien();
     }
     public void setTongTien(DSCTPhieuNhapHang dsct){
         tongTien=dsct.tongTienPNH(maPNH);

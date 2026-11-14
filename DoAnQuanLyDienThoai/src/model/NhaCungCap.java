@@ -2,7 +2,7 @@ package model;
 
 import java.util.Scanner;
 public class NhaCungCap {
-    Scanner sc = new Scanner(System.in);
+    transient Scanner sc = new Scanner(System.in);
     private static int countNC=0;
     private String maNCC;
     private String tenNCC;

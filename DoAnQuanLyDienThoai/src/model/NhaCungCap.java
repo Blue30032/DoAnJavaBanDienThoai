@@ -1,8 +1,7 @@
 package model;
+import helper.Nhaplieu;
 
-import java.util.Scanner;
 public class NhaCungCap {
-    Scanner sc = new Scanner(System.in);
     private static int countNC=0;
     private String maNCC;
     private String tenNCC;
@@ -31,12 +30,9 @@ public class NhaCungCap {
     //lay thong tin
     @Override public String toString() { return String.format("%-6s %-25s %s", maNCC, tenNCC, diaChi); }
     public void nhap(){
-        System.out.print("Nhap ma nha cung cap:");
-        maNCC=sc.nextLine();
-        System.out.print("Nhap ten nha cung cap:");
-        tenNCC=sc.nextLine();
-        System.out.print("Nhap dia chi:");
-        diaChi=sc.nextLine();
+        maNCC=Nhaplieu.docChuoi("Nhap ma nha cung cap");
+        tenNCC=Nhaplieu.docChuoi("Nhap ten nha cung cap");
+        diaChi=Nhaplieu.docChuoi("Nhap dia chi");
     }
     //cac ham get/set
     public String getMaNCC(){
@@ -66,7 +62,9 @@ public class NhaCungCap {
                 +getDiaChi()+"|";
     }
     public static NhaCungCap fromFileString(String dong){
-        String[] s=dong.split("\\|");
+        String[] s=dong.split("\\|",-1);
+        if(s.length !=3) // tránh trường hợp file bị lỗi thiếu dữ liệu không lấy dc đối tượng nhà cung cấp
+            throw new IllegalArgumentException("Thieu truong du lieu nha cung cap"); 
         return new NhaCungCap(s[0].trim(),s[1].trim(),s[2].trim());
     }
 }

@@ -1,0 +1,10 @@
+KH001|Khach|Hang01|Nam|09       1|1250000
+KH002|Khach|Hang02|Nu|09       2|2500000
+KH003|Khach|Hang03|Nam|09       3|3750000
+KH004|Khach|Hang04|Nu|09       4|5000000
+KH005|Khach|Hang05|Nam|09       5|6250000
+KH006|Khach|Hang06|Nu|09       6|7500000
+KH007|Khach|Hang07|Nam|09       7|8750000
+KH008|Khach|Hang08|Nu|09       8|10000000
+KH009|Khach|Hang09|Nam|09       9|11250000
+KH010|Khach|Hang10|Nu|09      10|12500000

@@ -16,24 +16,20 @@ public class Main {
         ch = CuaHang.doc();
         int chon;
         do {
-            menu();
+            menuChinh();
             chon = docSo("Chọn chức năng: ");
             try {
                 switch (chon) {
-                    case 1: inDS(ch.getSanPhams()); break;
-                    case 2: themSanPham(); break;
-                    case 3: xemChiTiet(); break;
-                    case 4: inDS(ch.getKhachHangs()); break;
-                    case 5: themKhachHang(); break;
-                    case 6: inDS(ch.getNhanViens()); break;
-                    case 7: themNhanVien(); break;
-                    case 8: inDS(ch.getNhaCungCaps()); break;
-                    case 9: themNhaCungCap(); break;
-                    case 10: lapHoaDon(); break;
-                    case 11: inDS(ch.getHoaDons()); break;
-                    case 12: lapPhieuNhap(); break;
-                    case 13: inDS(ch.getPhieuNhaps()); break;
-                    case 14: thongKe(); break;
+                    case 1: menuSanPham(); break;
+                    case 2: menuHoaDon(); break;
+                    case 3: menuChiTietHoaDon(); break;
+                    case 4: menuPhieuNhap(); break;
+                    case 5: menuChiTietPhieuNhap(); break;
+                    case 6: menuHangSanXuat(); break;
+                    case 7: menuKhachHang(); break;
+                    case 8: menuLoaiHang(); break;
+                    case 9: menuNhaCungCap(); break;
+                    case 10: menuNhanVien(); break;
                     case 0: break;
                     default: System.out.println("Lựa chọn không hợp lệ!");
                 }
@@ -45,17 +41,199 @@ public class Main {
         catch (IOException e) { System.out.println("Lỗi lưu file: " + e.getMessage()); }
     }
 
-    private static void menu() {
-        System.out.println("\n========== QUẢN LÝ CỬA HÀNG ĐIỆN THOẠI ==========");
-        System.out.println(" 1. DS sản phẩm            2. Thêm sản phẩm (+ chi tiết)");
-        System.out.println(" 3. Xem chi tiết sản phẩm");
-        System.out.println(" 4. DS khách hàng          5. Thêm khách hàng");
-        System.out.println(" 6. DS nhân viên           7. Thêm nhân viên");
-        System.out.println(" 8. DS nhà cung cấp        9. Thêm nhà cung cấp");
-        System.out.println("10. Lập hóa đơn bán       11. DS hóa đơn");
-        System.out.println("12. Lập phiếu nhập hàng   13. DS phiếu nhập");
-        System.out.println("14. Thống kê doanh thu     0. Lưu & thoát");
-        System.out.println("=================================================");
+    private static void menuChinh() {
+        System.out.println("\n===== HỆ THỐNG QUẢN LÝ BÁN HÀNG =====");
+        System.out.println("1. Quản lý sản phẩm");
+        System.out.println("2. Quản lý hóa đơn");
+        System.out.println("3. Quản lý chi tiết hóa đơn");
+        System.out.println("4. Quản lý phiếu nhập");
+        System.out.println("5. Quản lý chi tiết phiếu nhập");
+        System.out.println("6. Quản lý hãng sản xuất");
+        System.out.println("7. Quản lý khách hàng");
+        System.out.println("8. Quản lý loại hàng");
+        System.out.println("9. Quản lý nhà cung cấp");
+        System.out.println("10. Quản lý nhân viên");
+        System.out.println("0. Thoát chương trình");
+        System.out.println("====================================");
+    }
+
+    private static void menuSanPham() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ SẢN PHẨM", new String[] {
+                "Xem danh sách", "Thêm sản phẩm", "Xem chi tiết sản phẩm"
+            });
+            chon = docSo("Chọn: ");
+            switch (chon) {
+                case 1: inDS(ch.getSanPhams()); break;
+                case 2: themSanPham(); break;
+                case 3: xemChiTiet(); break;
+                case 0: break;
+                default: System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuHoaDon() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ HÓA ĐƠN", new String[] {
+                "Xem danh sách", "Lập hóa đơn bán hàng"
+            });
+            chon = docSo("Chọn: ");
+            switch (chon) {
+                case 1: inDS(ch.getHoaDons()); break;
+                case 2: lapHoaDon(); break;
+                case 0: break;
+                default: System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuChiTietHoaDon() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ CHI TIẾT HÓA ĐƠN", new String[] {
+                "Xem danh sách chi tiết"
+            });
+            chon = docSo("Chọn: ");
+            if (chon == 1) {
+                for (HoaDon hd : ch.getHoaDons()) {
+                    for (CTHoaDon ct : hd.getChiTiet()) System.out.println(ct);
+                }
+            } else if (chon != 0) {
+                System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuPhieuNhap() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ PHIẾU NHẬP", new String[] {
+                "Xem danh sách", "Lập phiếu nhập hàng"
+            });
+            chon = docSo("Chọn: ");
+            switch (chon) {
+                case 1: inDS(ch.getPhieuNhaps()); break;
+                case 2: lapPhieuNhap(); break;
+                case 0: break;
+                default: System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuChiTietPhieuNhap() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ CHI TIẾT PHIẾU NHẬP", new String[] {
+                "Xem danh sách chi tiết"
+            });
+            chon = docSo("Chọn: ");
+            if (chon == 1) {
+                for (PhieuNhapHang p : ch.getPhieuNhaps()) {
+                    for (CTPhieuNhapHang ct : p.getChiTiet()) System.out.println(ct);
+                }
+            } else if (chon != 0) {
+                System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuHangSanXuat() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ HÃNG SẢN XUẤT", new String[] {
+                "Xem danh sách hãng"
+            });
+            chon = docSo("Chọn: ");
+            if (chon == 1) {
+                List<String> hang = new java.util.ArrayList<String>();
+                for (SanPham sp : ch.getSanPhams()) {
+                    if (!hang.contains(sp.getHang())) hang.add(sp.getHang());
+                }
+                inDS(hang);
+            } else if (chon != 0) {
+                System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuKhachHang() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ KHÁCH HÀNG", new String[] {
+                "Xem danh sách", "Thêm khách hàng"
+            });
+            chon = docSo("Chọn: ");
+            switch (chon) {
+                case 1: inDS(ch.getKhachHangs()); break;
+                case 2: themKhachHang(); break;
+                case 0: break;
+                default: System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuLoaiHang() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ LOẠI HÀNG", new String[] {
+                "Thống kê iOS", "Thống kê Android"
+            });
+            chon = docSo("Chọn: ");
+            if (chon == 1 || chon == 2) {
+                int soLuong = 0;
+                for (SanPham sp : ch.getSanPhams()) {
+                    boolean laIOS = sp instanceof IOS;
+                    if ((chon == 1 && laIOS) || (chon == 2 && !laIOS)) soLuong++;
+                }
+                System.out.println("Số sản phẩm " + (chon == 1 ? "iOS" : "Android") + ": " + soLuong);
+            } else if (chon != 0) {
+                System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuNhaCungCap() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ NHÀ CUNG CẤP", new String[] {
+                "Xem danh sách", "Thêm nhà cung cấp"
+            });
+            chon = docSo("Chọn: ");
+            switch (chon) {
+                case 1: inDS(ch.getNhaCungCaps()); break;
+                case 2: themNhaCungCap(); break;
+                case 0: break;
+                default: System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuNhanVien() {
+        int chon;
+        do {
+            menuPhu("QUẢN LÝ NHÂN VIÊN", new String[] {
+                "Xem danh sách", "Thêm nhân viên"
+            });
+            chon = docSo("Chọn: ");
+            switch (chon) {
+                case 1: inDS(ch.getNhanViens()); break;
+                case 2: themNhanVien(); break;
+                case 0: break;
+                default: System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (chon != 0);
+    }
+
+    private static void menuPhu(String tieuDe, String[] muc) {
+        System.out.println("\n=== " + tieuDe + " ===");
+        for (int i = 0; i < muc.length; i++) {
+            System.out.println((i + 1) + ". " + muc[i]);
+        }
+        System.out.println("0. Quay lại");
+        System.out.println("==============================");
     }
 
     private static String docChuoi(String nhan) {

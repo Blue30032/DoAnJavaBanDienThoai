@@ -1,0 +1,10 @@
+SP001|iOS 17|256|8|Apple|A17 Pro|6.7|4422|48|USB-C|Titan
+SP002|iOS 17|128|6|Apple|A16 Bionic|6.1|3349|48|USB-C|Nhom
+SP003|iOS 16|256|6|Apple|A16 Bionic|6.1|3200|48|Lightning|Thep
+SP004|iOS 15|128|4|Apple|A15 Bionic|6.1|3227|12|Lightning|Nhom
+SP005|iOS 15|64|4|Apple|A15 Bionic|4.7|2018|12|Lightning|Nhom
+SP006|Android 14|512|12|Samsung|Snapdragon 8 Gen 3|6.8|5000|200|USB-C|Titan
+SP007|Android 14|256|8|Samsung|Exynos 1480|6.6|5000|50|USB-C|Nhom
+SP008|Android 14|512|12|Xiaomi|Dimensity 9300+|6.67|5000|50|USB-C|Kinh
+SP009|Android 14|256|12|Oppo|Dimensity 7300|6.7|5000|50|USB-C|Kinh
+SP010|Android 15|256|16|Google|Tensor G4|6.3|4700|50|USB-C|Nhom

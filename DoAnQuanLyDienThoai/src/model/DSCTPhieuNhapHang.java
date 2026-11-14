@@ -6,8 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
-public class DSCTPhieuNhapHang {
+public class DSCTPhieuNhapHang implements Iterable<CTPhieuNhapHang> {
     Scanner sc=new Scanner(System.in);
     private static final String TEN_FILE="ChiTietPhieuNhapHang.txt";
     private CTPhieuNhapHang[] chiTiet;
@@ -195,6 +196,25 @@ public class DSCTPhieuNhapHang {
     //cac ham bo tro
     public int getN(){
         return n;
+    }
+    public boolean isEmpty() {
+        return n == 0;
+    }
+    @Override
+    public Iterator<CTPhieuNhapHang> iterator() {
+        return new Iterator<CTPhieuNhapHang>() {
+            private int index;
+
+            @Override
+            public boolean hasNext() {
+                return index < n;
+            }
+
+            @Override
+            public CTPhieuNhapHang next() {
+                return chiTiet[index++];
+            }
+        };
     }
     public double tinhTongTien(){
         double t=0;

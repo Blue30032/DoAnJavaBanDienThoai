@@ -1,0 +1,10 @@
+NCC01|Nha cung cap 01|So  1 Nguyen Trai|
+NCC02|Nha cung cap 02|So  2 Nguyen Trai|
+NCC03|Nha cung cap 03|So  3 Nguyen Trai|
+NCC04|Nha cung cap 04|So  4 Nguyen Trai|
+NCC05|Nha cung cap 05|So  5 Nguyen Trai|
+NCC06|Nha cung cap 06|So  6 Nguyen Trai|
+NCC07|Nha cung cap 07|So  7 Nguyen Trai|
+NCC08|Nha cung cap 08|So  8 Nguyen Trai|
+NCC09|Nha cung cap 09|So  9 Nguyen Trai|
+NCC10|Nha cung cap 10|So  10 Nguyen Trai|

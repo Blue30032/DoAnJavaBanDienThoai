@@ -1,0 +1,10 @@
+IOS|SP001|iPhone 15 Pro Max|10|29990000.00|Titan|true
+IOS|SP002|iPhone 15|12|21990000.00|Den|false
+IOS|SP003|iPhone 14 Pro|8|24990000.00|Vang|true
+IOS|SP004|iPhone 13|15|16990000.00|Xanh|false
+IOS|SP005|iPhone SE 2022|9|10990000.00|Trang|false
+ANDROID|SP006|Samsung Galaxy S24 Ultra|11|27990000.00|Den|true|false
+ANDROID|SP007|Samsung Galaxy A55|20|10990000.00|Xanh|false|false
+ANDROID|SP008|Xiaomi 14T Pro|14|14990000.00|Xanh|true|true
+ANDROID|SP009|Oppo Reno 12 Pro|13|12990000.00|Hong|true|false
+ANDROID|SP010|Google Pixel 9 Pro|7|23990000.00|Den|true|false

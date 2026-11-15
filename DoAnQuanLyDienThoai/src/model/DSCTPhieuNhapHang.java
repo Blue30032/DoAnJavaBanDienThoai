@@ -98,10 +98,12 @@ public class DSCTPhieuNhapHang {
                     int soLuongMoi=chiTiet[i].getSoLuong();
                     int chenhLech=soLuongMoi-soLuongCu;
                     X.setsoLuong(X.getSoLuong()+chenhLech);
+                    chiTiet[i].setThanhTien(chiTiet[i].getSoLuong(), chiTiet[i].getDonGia());
                     break;
                 case 2:
                     System.out.print("Nhap don gia moi:");
                     chiTiet[i].setDonGia(Double.parseDouble(sc.nextLine()));
+                    chiTiet[i].setThanhTien(chiTiet[i].getSoLuong(), chiTiet[i].getDonGia());
                     break;
                 default:break;
             }
@@ -196,6 +198,7 @@ public class DSCTPhieuNhapHang {
     public int getN(){
         return n;
     }
+    public CTPhieuNhapHang getCT(int i) { return chiTiet[i]; }
     public double tinhTongTien(){
         double t=0;
         for(CTPhieuNhapHang ct : chiTiet){

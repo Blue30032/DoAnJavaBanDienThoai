@@ -159,6 +159,7 @@ public abstract class SanPham implements Serializable {
                 case 4: setMausac(Nhaplieu.docChuoi("Mau sac moi"));
                     break;
                 case 5: nhapTNrieng();
+                    break;
                 default:
                     break;
             }

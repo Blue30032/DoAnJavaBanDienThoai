@@ -135,6 +135,11 @@ public abstract class SanPham implements Serializable {
     {
         System.out.println("---Nhap thong tin san pham---");
         setmaSP(Nhaplieu.docChuoi("Ma san pham"));
+        nhapThongTinConLai();
+    }
+
+    public void nhapThongTinConLai()
+    {
         setTenSP(Nhaplieu.docChuoi("Ten san pham"));
         setsoLuong(Nhaplieu.docSoNguyen("So luong",0));
         setdongia(Nhaplieu.docSoNguyen("Don gia(VND)", 1));
@@ -167,10 +172,17 @@ public abstract class SanPham implements Serializable {
     }
     public void xuat()
     {
-        System.out.printf("[%s] %s | Hang: %s | Mau: %s | Ton: %d%n",maSP,tenSP,getHang(),mauSac,soLuong);
-        System.out.printf("Gia goc: %,.0f | Gia ban le: %,.0f | Dong cao cap: %s%n",donGia,Giabanle(),
-                          HangPro_ultra() ? "Co" : "Khong");
-        System.out.println(" " + getTNrieng());
+        System.out.println("+--------------------------------------------------------------------------+");
+        System.out.printf("| Ma san pham : %-18s | Ten san pham : %-28s |%n",
+                maSP, tenSP);
+        System.out.printf("| Hang        : %-18s | Mau sac      : %-28s |%n",
+                getHang(), mauSac);
+        System.out.printf("| Ton kho     : %-18d | Gia goc      : %,15.0f VND |%n",
+                soLuong, donGia);
+        System.out.printf("| Gia ban le  : %,15.0f VND | Dong cao cap : %-28s |%n",
+                Giabanle(), HangPro_ultra() ? "Co" : "Khong");
+        System.out.printf("| Tinh nang   : %-58s |%n", getTNrieng());
+        System.out.println("+--------------------------------------------------------------------------+");
     }
     @Override
     public String toString() {

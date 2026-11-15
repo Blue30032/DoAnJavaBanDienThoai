@@ -92,7 +92,6 @@ public class QLDSSP extends QuanLy {
         if(dssp.nhapSanPham())
         {
             SanPham sp = dssp.getvitri(dssp.getSoLuong()-1);// trả về vị trí cuối cùng của dssp 
-            System.out.println("Đã thêm sản phẩm " + sp.getMaSP() + ".");
             if (Nhaplieu.xacNhan("Nhập luôn chi tiết sản phẩm"))  // hàm boolean nhập "có" nếu muốn thêm chi tiết và sản phẩm
                 themChiTiet(sp.getMaSP());
         }

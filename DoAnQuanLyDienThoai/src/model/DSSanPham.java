@@ -65,19 +65,53 @@ public class DSSanPham {
     // Nhập sản phẩm IOS or android vào để thêm vào ds . trả về true nếu thêm thành công
     public boolean nhapSanPham()
     {
+        String maSP = taoMaSanPham();
+        System.out.println("Ma san pham tu dong: " + maSP);
         int loai = Nhaplieu.docSoNguyen("Nhap loai san pham(1.IOS , 2.ANDROID", 1, 2);
         SanPham sp = (loai==1) ? new IOS() : new Android();
-        sp.nhap();
+        sp.setmaSP(maSP);
+        sp.nhapThongTinConLai();
         if(!them(sp))
         {
-            System.out.println("Ma "+sp.getMaSP()+" da ton tai, khong them dc");
+            System.out.println("Khong the them san pham " + sp.getMaSP() + ".");
             return false;
         }
         else 
         {
-            System.out.println("Da them SP "+sp.getTenSP()+" vao danh sach");
+            System.out.println("\nDa them san pham: " + sp.getTenSP()
+                    + " (" + sp.getMaSP() + ")");
+            sp.xuat();
             return true;
         }
+    }
+
+    private String taoMaSanPham()
+    {
+        int soLonNhat = 0;
+        for (int i = 0; i < n; i++) {
+            String ma = ds[i].getMaSP();
+            if (ma == null || ma.length() <= 2
+                    || !ma.regionMatches(true, 0, "SP", 0, 2)) {
+                continue;
+            }
+
+            String phanSo = ma.substring(2);
+            boolean laChuoiSo = !phanSo.isEmpty();
+            for (int j = 0; j < phanSo.length(); j++) {
+                if (!Character.isDigit(phanSo.charAt(j))) {
+                    laChuoiSo = false;
+                    break;
+                }
+            }
+            if (laChuoiSo) {
+                try {
+                    soLonNhat = Math.max(soLonNhat, Integer.parseInt(phanSo));
+                } catch (NumberFormatException e) {
+                    // Bỏ qua mã ngoài phạm vi số nguyên; mã mới vẫn được sinh hợp lệ.
+                }
+            }
+        }
+        return String.format("SP%03d", soLonNhat + 1);
     }
     // sửa sản phẩm theo mã trả về true nếu sửa thành công
     public boolean sua(String maSP)
@@ -215,14 +249,34 @@ public class DSSanPham {
     {
         if(n==0)
         {
-            System.out.println("Danh Sach rong!");
+            System.out.println("Danh sach san pham rong!");
             return;
         }
+        System.out.println();
+        System.out.println("+--------+----------+----------------------+-------+----------------+----------------+----------+");
+        System.out.printf("| %-6s | %-8s | %-20s | %-5s | %-14s | %-14s | %-8s |%n",
+                "Ma", "Hang", "Ten san pham", "Ton", "Gia goc", "Gia ban le", "Mau");
+        System.out.println("+--------+----------+----------------------+-------+----------------+----------------+----------+");
         for(int i=0;i<n;i++)
         {
-            ds[i].xuat();
-            System.out.println("--------------------------------------------");
+            SanPham sp = ds[i];
+            System.out.printf("| %-6s | %-8s | %-20s | %5d | %,14.0f | %,14.0f | %-8s |%n",
+                    cat(sp.getMaSP(), 6),
+                    cat(sp.getHang(), 8),
+                    cat(sp.getTenSP(), 20),
+                    sp.getSoLuong(),
+                    sp.getDonGia(),
+                    sp.Giabanle(),
+                    cat(sp.getMauSac(), 8));
         }
+        System.out.println("+--------+----------+----------------------+-------+----------------+----------------+----------+");
+        System.out.println("Tong so san pham: " + n);
+    }
+
+    private static String cat(String value, int max) {
+        if (value == null) return "";
+        value = value.trim();
+        return value.length() <= max ? value : value.substring(0, max - 1) + ".";
     }
     /*Thống kê */
     // tổng giá trị hàng hóa trong kho = tổng giá bán lẻ * số lượng

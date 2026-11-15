@@ -1,10 +1,7 @@
 package model;
 import helper.Nhaplieu;
   
-public class QLDSSP {
-    public static  DSSanPham dssp = new DSSanPham();
-    public static  DSChiTietSanPham dsctsp = new DSChiTietSanPham();
-
+public class QLDSSP extends QuanLy {
     private QLDSSP() { }
     
     // menu quản lý sản phẩm 

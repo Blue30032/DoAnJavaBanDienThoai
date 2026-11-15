@@ -54,6 +54,9 @@ public class Android extends SanPham {
     @Override 
     public String getHang()
     {
+        if (!getHangTheoChiTiet().isEmpty()) {
+            return getHangTheoChiTiet();
+        }
         String ten = getTenSP().toLowerCase();
         for(String[] dong : Bang_Hang) // quét từng dòng trong bảng hàng ( lấy dòng từ bảng 2 chiều ) 
         {

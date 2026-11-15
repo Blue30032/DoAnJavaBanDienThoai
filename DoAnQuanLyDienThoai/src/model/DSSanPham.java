@@ -141,6 +141,19 @@ public class DSSanPham {
         int i = timViTri(maSP);
         return i==-1 ? null : ds[i];
     }
+
+    public boolean capNhatHangTheoChiTiet(String maSP, String hang)
+    {
+        SanPham sp = timTheoMa(maSP);
+        if (sp == null) return false;
+        sp.capNhatHangTheoChiTiet(hang);
+        return true;
+    }
+
+    public boolean xoaHangTheoChiTiet(String maSP)
+    {
+        return capNhatHangTheoChiTiet(maSP, "");
+    }
     // tìm kiếm theo tên trả về danh sách sản phẩm có chưa tên đó
     public DSSanPham timkiemTen(String TenSP)
     {

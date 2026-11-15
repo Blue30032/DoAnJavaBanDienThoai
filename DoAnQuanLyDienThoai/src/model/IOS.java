@@ -32,6 +32,9 @@ public class IOS extends SanPham {
     @Override 
     public String getHang()
     {
+        if (!getHangTheoChiTiet().isEmpty()) {
+            return getHangTheoChiTiet();
+        }
         return "Apple";
     }
     @Override  

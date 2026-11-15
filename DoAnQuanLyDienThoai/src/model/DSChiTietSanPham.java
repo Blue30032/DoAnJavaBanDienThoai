@@ -82,10 +82,54 @@ public class DSChiTietSanPham {
         for (int i = 0; i < n; i++) if (ds[i].getRam() >= ram) kq.them(ds[i]);
         return kq;
     }
+
+    public void dongBoHangSanPham(DSSanPham danhSachSanPham) {
+        for (int i = 0; i < n; i++) {
+            danhSachSanPham.capNhatHangTheoChiTiet(
+                    ds[i].getMaSP(), ds[i].getHang());
+        }
+    }
     // Phươn thức xuất thông tin 
     public void xuat() {
         if (n == 0) { System.out.println("(Danh sách trống)"); return; }
-        for (int i = 0; i < n; i++) ds[i].xuat();
+        inTieuDe();
+        for (int i = 0; i < n; i++) inDong(ds[i]);
+        inChanBang();
+        System.out.println("Tong so chi tiet san pham: " + n);
+    }
+
+    private void inTieuDe() {
+        System.out.println();
+        inChanBang();
+        System.out.printf("| %-6s | %-8s | %-9s | %-12s | %-5s | %-7s | %-8s | %-8s | %-7s | %-10s | %-10s |%n",
+                "Ma SP", "HĐH", "Hang", "Chip", "RAM", "Bo nho",
+                "Man hinh", "Pin", "Camera", "Cong sac", "Chat lieu");
+        inChanBang();
+    }
+
+    private void inDong(ChiTietSanPham ct) {
+        System.out.printf("| %-6s | %-8s | %-9s | %-12s | %5d | %7d | %8.1f | %8d | %7d | %-10s | %-10s |%n",
+                cat(ct.getMaSP(), 6),
+                cat(ct.getHeDieuHanh(), 8),
+                cat(ct.getHang(), 9),
+                cat(ct.getChip(), 12),
+                ct.getRam(),
+                ct.getDungLuong(),
+                ct.getManHinh(),
+                ct.getPin(),
+                ct.getDoPhanGiaiCamera(),
+                cat(ct.getCongSac(), 10),
+                cat(ct.getChatLieu(), 10));
+    }
+
+    private void inChanBang() {
+        System.out.println("+--------+----------+-----------+--------------+-------+---------+----------+----------+---------+------------+------------+");
+    }
+
+    private static String cat(String value, int max) {
+        if (value == null) return "";
+        value = value.trim();
+        return value.length() <= max ? value : value.substring(0, max - 1) + ".";
     }
     /* Thông kê */
     public void ThongKeDungLuong() {
@@ -150,13 +194,16 @@ public class DSChiTietSanPham {
         for (int i = 0; i < n; i++) {
 
             if (ds[i].getDungLuong() == dungLuong) {
-
-                ds[i].xuat();
+                if (!timThay) inTieuDe();
+                inDong(ds[i]);
                 timThay = true;
             }
         }
-        if (!timThay)
+        if (!timThay) {
             System.out.println("Khong co san pham nao co dung luong nay.");
+        } else {
+            inChanBang();
+        }
     }
     /* Phương thức đọc và ghi file */
     public boolean ghiFile()

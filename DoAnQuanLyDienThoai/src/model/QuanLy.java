@@ -13,6 +13,7 @@ public class QuanLy {
     public void docDuLieu(){
         dssp.docFile();
         dsctsp.docFile();
+        dsctsp.dongBoHangSanPham(dssp);
         dskh.docFile();
         dsnv.docFile();
         dsncc.docFile();

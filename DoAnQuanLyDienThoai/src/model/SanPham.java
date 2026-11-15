@@ -6,6 +6,7 @@ import helper.Nhaplieu;
 public abstract class SanPham implements Serializable {
     private static final long serialVersionUID = 1L;
     private String maSP, tenSP, mauSac;
+    private String hangTheoChiTiet;
     private int soLuong; 
     private double donGia;
     /*thuộc tính static: đếm số lần tạo đối tượng SanPham đã được tạo ra */
@@ -18,6 +19,7 @@ public abstract class SanPham implements Serializable {
         soLuong=0;
         donGia=0;
         mauSac="";
+        hangTheoChiTiet="";
         tongSanPham++;
     }
     public SanPham(SanPham a)
@@ -27,6 +29,7 @@ public abstract class SanPham implements Serializable {
         soLuong=a.soLuong;
         donGia=a.donGia;
         mauSac=a.mauSac;
+        hangTheoChiTiet=a.hangTheoChiTiet;
         tongSanPham++;
     }
     public SanPham(String maSP, String tenSP, int soLuong, double donGia, String mauSac) {
@@ -35,6 +38,7 @@ public abstract class SanPham implements Serializable {
         setsoLuong(soLuong);
         setdongia(donGia);
         setMausac(mauSac);
+        hangTheoChiTiet="";
         tongSanPham++;
     }
     //get
@@ -43,6 +47,11 @@ public abstract class SanPham implements Serializable {
     public int getSoLuong() { return soLuong; }
     public double getDonGia() { return donGia; }
     public String getMauSac() { return mauSac; }
+    protected String getHangTheoChiTiet() { return hangTheoChiTiet; }
+
+    public void capNhatHangTheoChiTiet(String hang) {
+        hangTheoChiTiet = hang == null ? "" : hang.trim();
+    }
     //set
     public void setmaSP(String maSP)
     {

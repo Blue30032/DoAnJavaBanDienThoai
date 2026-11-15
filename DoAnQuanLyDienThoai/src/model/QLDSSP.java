@@ -173,7 +173,10 @@ public class QLDSSP extends QuanLy {
                 case 3: themChiTiet(Nhaplieu.docChuoi("Mã sản phẩm")); break;
                 case 4: suaChiTiet(); break;
                 case 5:
-                    System.out.println(dsctsp.xoa(Nhaplieu.docChuoi("Mã sản phẩm")) ? "Đã xóa." : "Không tìm thấy.");
+                    String maXoaChiTiet = Nhaplieu.docChuoi("Mã sản phẩm");
+                    boolean daXoaChiTiet = dsctsp.xoa(maXoaChiTiet);
+                    if (daXoaChiTiet) dssp.xoaHangTheoChiTiet(maXoaChiTiet);
+                    System.out.println(daXoaChiTiet ? "Đã xóa." : "Không tìm thấy.");
                     break;
                 case 6: dsctsp.timTheoHang(Nhaplieu.docChuoi("Hãng")).xuat(); break;
                 case 7: dsctsp.timRamTuToiThieu(Nhaplieu.docSoNguyen("RAM tối thiểu (GB)", 1)).xuat(); break;
@@ -190,13 +193,18 @@ public class QLDSSP extends QuanLy {
         ChiTietSanPham ct = new ChiTietSanPham();
         ct.setMaSP(dssp.timTheoMa(ma).getMaSP());
         ct.nhapThongSo();
-        dsctsp.them(ct);
+        if (!dsctsp.them(ct)) {
+            System.out.println("Khong the them chi tiet san pham.");
+            return;
+        }
+        dssp.capNhatHangTheoChiTiet(ma, ct.getHang());
         System.out.println("Đã thêm chi tiết.");
     }
     private static void suaChiTiet() {
         ChiTietSanPham ct = dsctsp.timTheoMa(Nhaplieu.docChuoi("Mã sản phẩm"));
         if (ct == null) { System.out.println("Chưa có chi tiết."); return; }
         ct.nhapThongSo();
+        dssp.capNhatHangTheoChiTiet(ct.getMaSP(), ct.getHang());
         System.out.println("Đã cập nhật.");
     }
 }   

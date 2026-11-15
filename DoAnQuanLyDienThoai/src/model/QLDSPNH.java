@@ -1,19 +1,11 @@
 package model;
 
-import helper.QuanLy;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 public class QLDSPNH extends QuanLy {
-    DSPhieuNhapHang dsPNH= new DSPhieuNhapHang();
-    DSCTPhieuNhapHang dsCTPNH= new DSCTPhieuNhapHang();
-    DSNhaCungCap dsNCC= new DSNhaCungCap();
-    DSNV dsNV=new DSNV();
-    DSSanPham dsSP=new DSSanPham();
-    
     Scanner sc = new Scanner(System.in);
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    @Override
     public void menu(){
         int chon;
         do{
@@ -60,26 +52,26 @@ public class QLDSPNH extends QuanLy {
             chon=Integer.parseInt(sc.nextLine());
             switch(chon){
                 case 1:
-                    dsPNH.xuat();
+                    dspnh.xuat();
                     break;
                 case 2:
                     System.out.print("Nhap ma PNH:");
                     String maPNH=sc.nextLine();
-                    if(dsPNH.IfindMaPNH(maPNH)!=-1){
+                    if(dspnh.IfindMaPNH(maPNH)!=-1){
                         System.out.println("Da ton tai ma phieu nay!");
                         System.out.println("Them khong thanh cong!");
                         break;
                     }
                     System.out.print("Nhap ma NCC:");
                     String maNCC=sc.nextLine();
-                    if(dsNCC.IfindMaNCC(maNCC)==-1){
+                    if(dsncc.IfindMaNCC(maNCC)==-1){
                         System.out.println("Khong ton tai nha cung cap nay!");
                         System.out.println("Them khong thanh cong!");
                         break;
                     }
                     System.out.print("Nhap ma NV:");
                     String maNV=sc.nextLine();
-                    if(dsNV.timViTriTheoMa(maNV)==-1){
+                    if(dsnv.timViTriTheoMa(maNV)==-1){
                         System.out.println("Khong ton tai nhan vien nay!");
                         System.out.println("Them khong thanh cong!");
                         break;
@@ -89,7 +81,7 @@ public class QLDSPNH extends QuanLy {
                     System.out.print("Nhap so luong chi tiet PNH:");
                     int n=Integer.parseInt(sc.nextLine());
                     while(n>0){
-                        if(dsCTPNH.them(maPNH,dsSP,dsPNH)){
+                        if(dsctpnh.them(maPNH,dssp,dspnh)){
                             n--;
                         }
                         else{
@@ -97,23 +89,23 @@ public class QLDSPNH extends QuanLy {
                         }
                     }
                     PhieuNhapHang x=new PhieuNhapHang(maPNH,maNCC,maNV,ngay,0);
-                    x.setTongTien(dsCTPNH);
-                    dsPNH.them(x);
+                    x.setTongTien(dsctpnh);
+                    dspnh.them(x);
                     break;
                 case 3:
                     System.out.print("Nhap ma phieu nhap hang muon sua: ");
                     String maSua=sc.nextLine();
-                    dsPNH.sua(maSua);
+                    dspnh.sua(maSua);
                     break;
                 case 4:
                     System.out.print("Nhap ma phieu nhap hang muon xoa: ");
                     String maXoa=sc.nextLine();
-                    dsPNH.xoa(maXoa);
+                    dspnh.xoa(maXoa);
                     break;
                 case 5:
                     System.out.print("Nhap ma phieu nhap hang can tim: ");
                     String maTim=sc.nextLine();
-                    PhieuNhapHang pnh=dsPNH.findMaPNH(maTim);
+                    PhieuNhapHang pnh=dspnh.findMaPNH(maTim);
                     if(pnh!=null){
                         System.out.println("Tim thay phieu nhap hang:");
                         System.out.println(pnh);
@@ -125,29 +117,29 @@ public class QLDSPNH extends QuanLy {
                 case 6:
                     System.out.print("Nhap ma nha cung cap: ");
                     String mancc=sc.nextLine();
-                    dsPNH.findMaNCC(mancc).xuat();
+                    dspnh.findMaNCC(mancc).xuat();
                     break;
                 case 7:
                     System.out.print("Nhap ma nhan vien: ");
                     String manv=sc.nextLine();
-                    dsPNH.findMaNV(manv).xuat();
+                    dspnh.findMaNV(manv).xuat();
                     break;
                 case 8:
                     System.out.print("Nhap ngay lap (dd/MM/yyyy): ");
                     LocalDate ngaylap = LocalDate.parse(sc.nextLine(), dtf);
-                    dsPNH.findNgayLap(ngaylap).xuat();
+                    dspnh.findNgayLap(ngaylap).xuat();
                     break;
                 case 9:
-                    dsPNH.thongkeNCC();
+                    dspnh.thongkeNCC();
                     break;
                 case 10:
-                    dsPNH.thongkeNV();
+                    dspnh.thongkeNV();
                     break;
                 case 11:
-                    dsPNH.thongkeTongTienNCC();
+                    dspnh.thongkeTongTienNCC();
                     break;
                 case 12:
-                    dsPNH.thongkeTongTienNV();
+                    dspnh.thongkeTongTienNV();
                     break;
                 case 0:
                     System.out.println("Ket thuc chuong trinh!");
@@ -175,19 +167,19 @@ public class QLDSPNH extends QuanLy {
             chon=Integer.parseInt(sc.nextLine());
             switch(chon){
                 case 1:
-                    dsCTPNH.xuat();
+                    dsctpnh.xuat();
                     break;
                 case 2:
                     System.out.print("Nhap ma PNH:");
                     String maPNH=sc.nextLine();
-                    if(dsPNH.IfindMaPNH(maPNH)==-1){
+                    if(dspnh.IfindMaPNH(maPNH)==-1){
                         System.out.println("Khong ton tai ma phieu nay!");
                         System.out.println("Them khong thanh cong!");
                         break;
                     }
                     System.out.print("Nhap ma SP:");
                     String maSP=sc.nextLine();
-                    if(dsSP.timTheoMa(maSP)==null){
+                    if(dssp.timTheoMa(maSP)==null){
                         System.out.println("Khong ton tai ma san pham nay!");
                         System.out.println("Them khong thanh cong!");
                         break;
@@ -197,44 +189,55 @@ public class QLDSPNH extends QuanLy {
                     System.out.print("Nhap don gia:");
                     double donGia = Double.parseDouble(sc.nextLine());
                     CTPhieuNhapHang x=new CTPhieuNhapHang(maPNH,maSP,soLuong,donGia);
-                    dsCTPNH.them(x);
+                    if (dsctpnh.IfindChiTiet(maPNH, maSP) != -1) {
+                        System.out.println("Chi tiet nay da ton tai!");
+                        break;
+                    }
+                    dsctpnh.them(x);
+                    dssp.nhaphang(maSP, soLuong);                       
+                    dspnh.findMaPNH(maPNH).setTongTien(dsctpnh); 
                     break;
                 case 3:
                     System.out.print("Nhap ma PNH:");
                     String pn=sc.nextLine();
                     System.out.print("Nhap ma SP:");
                     String sp=sc.nextLine();
-                    dsCTPNH.sua(pn,sp,dsSP);
+                    dsctpnh.sua(pn,sp,dssp);
+                    PhieuNhapHang p = dspnh.findMaPNH(pn);
+                    if (p != null) p.setTongTien(dsctpnh);
                     break;
                 case 4:
                     System.out.print("Nhap ma PNH:");
                     String Pn=sc.nextLine();
                     System.out.print("Nhap ma SP:");
                     String Sp=sc.nextLine();
-                    dsCTPNH.xoa(Pn,Sp,dsSP);
+                    dsctpnh.xoa(Pn,Sp,dssp);
+                    PhieuNhapHang q = dspnh.findMaPNH(Pn);
+                    if (q != null) q.setTongTien(dsctpnh);
                     break;
                 case 5:
                     System.out.print("Nhap ma PNH:");
                     String PN=sc.nextLine();
-                    dsCTPNH.findPNH(PN).xuat();
+                    dsctpnh.findPNH(PN).xuat();
                     break;
                 case 6:
                     System.out.print("Nhap ma SP:");
                     String SP=sc.nextLine();
-                    dsCTPNH.findSP(SP).xuat();
+                    dsctpnh.findSP(SP).xuat();
                     break;
                 case 7:
                     System.out.print("Nhap thanh tien:");
                     double thanhTien=Double.parseDouble(sc.nextLine());
-                    DSCTPhieuNhapHang z=dsCTPNH.findThanhTien(thanhTien);
+                    DSCTPhieuNhapHang z=dsctpnh.findThanhTien(thanhTien);
                     if(z==null){
                         System.out.println("Khong tim thay!");
                     }
                     else{
                         z.xuat();
                     }
+                    break;
                 case 8:
-                    dsCTPNH.thongkeSoLuong();
+                    dsctpnh.thongkeSoLuong();
                     break;
                 case 0:
                     System.out.println("Ket thuc chuong trinh!");

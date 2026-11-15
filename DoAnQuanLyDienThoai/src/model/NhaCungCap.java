@@ -59,7 +59,7 @@ public class NhaCungCap {
     public String toFileString(){
         return getMaNCC()+"|"
                 +getTenNCC()+"|"
-                +getDiaChi()+"|";
+                +getDiaChi();
     }
     public static NhaCungCap fromFileString(String dong){
         String[] s=dong.split("\\|",-1);

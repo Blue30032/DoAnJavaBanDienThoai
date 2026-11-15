@@ -5,10 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import helper.IDocGhiFile;
 import helper.Nhaplieu;
 
-public class DSChiTietSanPham implements IDocGhiFile{
+public class DSChiTietSanPham {
     public static final String TEN_FILE = "ChiTietSanPham.txt";
     private ChiTietSanPham[] ds;
     private int n;
@@ -160,11 +159,10 @@ public class DSChiTietSanPham implements IDocGhiFile{
             System.out.println("Khong co san pham nao co dung luong nay.");
     }
     /* Phương thức đọc và ghi file */
-  @Override
-    public boolean ghiFile(String tenFile)
+    public boolean ghiFile()
     {
         try {
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile)))
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(TEN_FILE)))
             {
                 for(int i=0;i<n;i++)
                 {
@@ -175,15 +173,14 @@ public class DSChiTietSanPham implements IDocGhiFile{
         return true;
     }
      catch(IOException e){
-            System.out.println("Loi ghi file "+ tenFile+ ": " +e.getMessage());
+            System.out.println("Loi ghi file "+ TEN_FILE+ ": " +e.getMessage());
             return false;
         }
     }
-    @Override
-    public boolean docFile(String tenFile)
+    public boolean docFile()
     {
         DSChiTietSanPham temp = new DSChiTietSanPham();
-        try(BufferedReader br = new BufferedReader(new FileReader(tenFile)))
+        try(BufferedReader br = new BufferedReader(new FileReader(TEN_FILE)))
         {
             String dong;
             int lineNumber=0;
@@ -204,7 +201,7 @@ public class DSChiTietSanPham implements IDocGhiFile{
             }
         } catch(IOException e)
         {
-            System.out.println("Loi doc file "+tenFile+": "+e.getMessage());
+            System.out.println("Loi doc file "+TEN_FILE+": "+e.getMessage());
             return false;
         }
         // Chỉ thay danh sách hiện tại sau khi đọc file thành công
@@ -213,4 +210,3 @@ public class DSChiTietSanPham implements IDocGhiFile{
         return true;  
     }
 }
-

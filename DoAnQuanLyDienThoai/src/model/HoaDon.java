@@ -121,7 +121,7 @@ public class HoaDon {
 
     @Override
     public String toString() {
-        return String.format("%-10s %-10s %-10s %-15s %15,.0f VNĐ",
+        return String.format("%-10s %-10s %-10s %-15s %,15.0f VNĐ",
                 maHD, maNV, maKH,
                 ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 tongTien);

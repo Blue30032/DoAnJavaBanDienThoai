@@ -1,10 +1,7 @@
 package model;
 
-import helper.QuanLy;
 import java.util.Scanner;
 public class QLDSNCC extends QuanLy {
-    DSNhaCungCap dsNCC= new DSNhaCungCap();
-    @Override
     public void menu(){
         int chon;
         Scanner sc = new Scanner(System.in);
@@ -24,32 +21,32 @@ public class QLDSNCC extends QuanLy {
             sc.nextLine();
             switch(chon){
                 case 1:
-                    dsNCC.xuat();
+                    dsncc.xuat();
                     break;
                 case 2:
                     NhaCungCap A=new NhaCungCap();
                     A.nhap();
-                    if(dsNCC.IfindMaNCC(A.getMaNCC())!=-1){
+                    if(dsncc.IfindMaNCC(A.getMaNCC())!=-1){
                         System.out.println("Da ton tai nha cung cap nay!");
                         break;
                     }
-                    dsNCC.them(A);
+                    dsncc.them(A);
                     System.out.println("Da them thanh cong!");
                     break;
                 case 3:
                     System.out.print("Nhap ma NCC muon sua: ");
                     String maSua=sc.nextLine();
-                    dsNCC.sua(maSua);
+                    dsncc.sua(maSua);
                     break;
                 case 4:
                     System.out.print("Nhap ma NCC muon xoa: ");
                     String maXoa=sc.nextLine();
-                    dsNCC.xoa(maXoa);
+                    dsncc.xoa(maXoa);
                     break;
                 case 5:
                     System.out.print("Nhap ma NCC can tim: ");
                     String maTim=sc.nextLine();
-                    NhaCungCap x=dsNCC.findMaNCC(maTim);
+                    NhaCungCap x=dsncc.findMaNCC(maTim);
                     if(x!=null){
                         System.out.println("Tim thay NCC:");
                         System.out.println(x);
@@ -61,17 +58,17 @@ public class QLDSNCC extends QuanLy {
                 case 6:
                     System.out.print("Nhap ten NCC can tim: ");
                     String ten=sc.nextLine();
-                    DSNhaCungCap dsNCCTen=dsNCC.findTen(ten);
+                    DSNhaCungCap dsNCCTen=dsncc.findTen(ten);
                     dsNCCTen.xuat();
                     break;
                 case 7:
                     System.out.print("Nhap dia chi can tim: ");
                     String dc=sc.nextLine();
-                    DSNhaCungCap dsDC=dsNCC.findDiaChi(dc);
+                    DSNhaCungCap dsDC=dsncc.findDiaChi(dc);
                     dsDC.xuat();
                     break;
                 case 8:
-                    dsNCC.thongkeDiaChi();
+                    dsncc.thongkeDiaChi();
                     break;
                 case 0:
                     System.out.println("Ket thuc chuong trinh!");

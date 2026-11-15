@@ -87,13 +87,13 @@ public class Nhaplieu {
     /* Hiện mục menu theo từng mục  */
     private static int hienMenu(String tieude, String So0, String[] muc)
     {
-        System.out.println("\n========== " + tieude + " ==========");
+        System.out.println("\n===== " + tieude + " =====");
         for(int i = 0; i < muc.length; i++)
         {
             System.out.println(i + 1 + ". " + muc[i]);
         }
         System.out.println("0. " + So0);
-        return docSoNguyen("Chon: ", 0, muc.length);
+        return docSoNguyen("Chon", 0, muc.length);
     }
     /* Chọn mục menu từ 0 đến số lượng mục và nếu chọn số 0 quay lại menu  */
     public static int menu(String tieude,String[] muc) 

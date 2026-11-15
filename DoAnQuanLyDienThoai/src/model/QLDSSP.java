@@ -25,7 +25,67 @@ public class QLDSSP extends QuanLy {
                 case 8:menuChiTiet(); break;
                 default: break;
             }
+
         } while(chon!=0);
+    }
+
+    public static void menuHangSanXuat() {
+        int chon;
+        do {
+            String[] muc = {"Xem danh sach theo hang", "Tim theo ten hang",
+                    "Thong ke theo hang"};
+            chon = Nhaplieu.menu("QUAN LY HANG SAN XUAT", muc);
+            switch (chon) {
+                case 1:
+                    dssp.xuatDanhSach();
+                    break;
+                case 2:
+                    dssp.timkiemHang(Nhaplieu.docChuoi("Ten hang")).xuatDanhSach();
+                    break;
+                case 3:
+                    dssp.thongKeTheoHang();
+                    break;
+                default:
+                    break;
+            }
+        } while (chon != 0);
+    }
+
+    public static void menuLoaiHang() {
+        int chon;
+        do {
+            String[] muc = {"Xem hang Android", "Xem hang IOS",
+                    "Xem dong cao cap"};
+            chon = Nhaplieu.menu("QUAN LY LOAI HANG", muc);
+            switch (chon) {
+                case 1:
+                    xuatTheoLoai(Android.class);
+                    break;
+                case 2:
+                    xuatTheoLoai(IOS.class);
+                    break;
+                case 3:
+                    dssp.timkiemDongCaoCap().xuatDanhSach();
+                    break;
+                default:
+                    break;
+            }
+        } while (chon != 0);
+    }
+
+    private static void xuatTheoLoai(Class<?> loai) {
+        int soLuong = 0;
+        for (int i = 0; i < dssp.getSoLuong(); i++) {
+            SanPham sp = dssp.getvitri(i);
+            if (loai.isInstance(sp)) {
+                sp.xuat();
+                System.out.println("--------------------------------------------");
+                soLuong++;
+            }
+        }
+        if (soLuong == 0) {
+            System.out.println("Khong co san pham phu hop.");
+        }
     }
     private static void them()
     {

@@ -51,6 +51,7 @@ public class QLDSHD extends QuanLy {
                     } else {
                         System.out.println("Khong tim thay hoa don!");
                     }
+
                     break;
 
                 case 5:
@@ -66,6 +67,7 @@ public class QLDSHD extends QuanLy {
                     } else {
                         System.out.println("Khong tim thay hoa don!");
                     }
+
                     break;
 
                 case 6:
@@ -81,6 +83,42 @@ public class QLDSHD extends QuanLy {
                     break;
             }
 
+        } while (chon != 0);
+    }
+
+    public void menuChiTiet() {
+        int chon;
+        do {
+            String[] muc = {"Xem danh sach", "Tim theo ma hoa don va ma san pham",
+                    "Sua chi tiet", "Xoa chi tiet"};
+            chon = Nhaplieu.menu("QUAN LY CHI TIET HOA DON", muc);
+            switch (chon) {
+                case 1:
+                    dscthd.xuatDanhSach();
+                    break;
+                case 2:
+                    CTHoaDon ct = dscthd.timTheoMa(
+                            Nhaplieu.docChuoi("Ma hoa don"),
+                            Nhaplieu.docChuoi("Ma san pham"));
+                    if (ct == null) {
+                        System.out.println("Khong tim thay chi tiet hoa don!");
+                    } else {
+                        ct.xuat();
+                    }
+                    break;
+                case 3:
+                    dscthd.sua(Nhaplieu.docChuoi("Ma hoa don"),
+                            Nhaplieu.docChuoi("Ma san pham"));
+                    break;
+                case 4:
+                    boolean daXoa = dscthd.xoa(
+                            Nhaplieu.docChuoi("Ma hoa don"),
+                            Nhaplieu.docChuoi("Ma san pham"));
+                    System.out.println(daXoa ? "Xoa thanh cong!" : "Khong tim thay chi tiet!");
+                    break;
+                default:
+                    break;
+            }
         } while (chon != 0);
     }
 

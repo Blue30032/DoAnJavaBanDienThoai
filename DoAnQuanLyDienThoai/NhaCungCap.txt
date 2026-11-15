@@ -1,0 +1,10 @@
+NCC01|FPT Trading|Ha Noi|
+NCC02|Digiworld|TP.HCM|
+NCC03|The Gioi Di Dong|TP.HCM|
+NCC04|Viettel Store|Ha Noi|
+NCC05|CellphoneS|TP.HCM|
+NCC06|Phong Vu|Da Nang|
+NCC07|An Phat Computer|Ha Noi|
+NCC08|GearVN|TP.HCM|
+NCC09|Nguyen Kim|TP.HCM|
+NCC10|Hoang Ha Mobile|Ha Noi|

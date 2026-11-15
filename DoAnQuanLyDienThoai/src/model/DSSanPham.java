@@ -6,11 +6,10 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import helper.IDocGhiFile;
 import helper.Nhaplieu;
 
 
-public class DSSanPham implements IDocGhiFile {
+public class DSSanPham {
     public static final String TEN_FILE = "SanPham.txt";
     // Sức chứa ban đầu của mảng
     private static final int SUC_CHUA_BAN_DAU = 10;
@@ -319,11 +318,10 @@ public class DSSanPham implements IDocGhiFile {
         System.out.printf("Tổng giá trị tồn kho (theo giá bán lẻ): %,.0f%n", giaTriTon);
     }
     /*Đọc và Ghi file */
-   @Override 
-    public boolean ghiFile(String tenFile)
+    public boolean ghiFile()
     {
         try {
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile)))
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(TEN_FILE)))
             {
                 for(int i=0;i<n;i++)
                 {
@@ -334,16 +332,15 @@ public class DSSanPham implements IDocGhiFile {
         return true;
         }
      catch(IOException e){
-            System.out.println("Loi ghi file "+ tenFile+ ": " +e.getMessage());
+            System.out.println("Loi ghi file "+ TEN_FILE+ ": " +e.getMessage());
             return false;
     }
 }
     // đọc file và tạo ra danh sách sản phẩm từ file. trả về true nếu đọc thành công
-    @Override 
-    public boolean docFile(String tenFile)
+    public boolean docFile()
     {
         DSSanPham temp = new DSSanPham();
-        try(BufferedReader br = new BufferedReader(new FileReader(tenFile)))
+        try(BufferedReader br = new BufferedReader(new FileReader(TEN_FILE)))
         {
             String dong;
             int lineNumber = 0;
@@ -363,7 +360,7 @@ public class DSSanPham implements IDocGhiFile {
             }
         } catch(IOException e)
         {
-            System.out.println("Loi doc file "+tenFile+": "+e.getMessage());
+            System.out.println("Loi doc file "+TEN_FILE+": "+e.getMessage());
             return false;
         }
         this.ds=temp.ds;

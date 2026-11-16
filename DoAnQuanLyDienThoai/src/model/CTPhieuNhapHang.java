@@ -52,7 +52,6 @@ public class CTPhieuNhapHang {
         if(soLuong<=0)
             throw new IllegalArgumentException("So luong phai > 0");
         this.soLuong=soLuong;
-        this.thanhTien=this.donGia*this.soLuong;   // thay đổi giá tiền phải sửa thành tiền 
     }
     public int getSoLuong(){
         return soLuong;
@@ -61,7 +60,6 @@ public class CTPhieuNhapHang {
          if(donGia<=0)
             throw new IllegalArgumentException("Don gia phai > 0");
         this.donGia=donGia;
-        this.thanhTien=this.donGia*this.soLuong;   // tinh lai thanh tien
     }
     public double getDonGia(){
         return donGia;

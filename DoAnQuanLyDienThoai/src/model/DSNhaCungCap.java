@@ -1,5 +1,7 @@
 package model;
 
+import helper.Nhaplieu;
+
 import helper.IDanhSach;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,9 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
-    Scanner sc= new Scanner(System.in);
     private NhaCungCap[] ncc;
     private int n;
     private static final String TEN_FILE = "NhaCungCap.txt";
@@ -67,14 +67,14 @@ public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
         System.out.print("1.Ten Nha Cung Cap.\n2.Dia Chi Nha Cung Cap.\nChon:");
         int chon;
         do{
-            int q=Integer.parseInt(sc.nextLine());
+            int q=Integer.parseInt(Nhaplieu.docDong());
             switch(q){
-                case 1:System.out.print("Nhap Ten Nha Cung Cap Moi:");ncc[i].setTenNCC(sc.nextLine());break;
-                case 2:System.out.print("Nhap Dia Chi Moi:");ncc[i].setDiaChi(sc.nextLine());break;
+                case 1:System.out.print("Nhap Ten Nha Cung Cap Moi:");ncc[i].setTenNCC(Nhaplieu.docDong());break;
+                case 2:System.out.print("Nhap Dia Chi Moi:");ncc[i].setDiaChi(Nhaplieu.docDong());break;
                 default:break;
             }
             System.out.print("Tiep tuc sua?( 1: Yes / 0: No )");
-            chon=Integer.parseInt(sc.nextLine());
+            chon=Integer.parseInt(Nhaplieu.docDong());
         }while(chon==1);
         System.out.println("Da sua thong tin thanh cong!");
         return true;
@@ -186,8 +186,7 @@ public class DSNhaCungCap implements IDanhSach<NhaCungCap>{
     }
     public void nhap(){
         System.out.println("Nhap so luong nha cung cap muon them");
-        int m=sc.nextInt();
-        sc.nextLine();
+        int m=Integer.parseInt(Nhaplieu.docDong());
         for(int i=0;i<m;i++){
             NhaCungCap temp=new NhaCungCap();
             temp.nhap();

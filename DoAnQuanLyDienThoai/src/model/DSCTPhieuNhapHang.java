@@ -1,14 +1,14 @@
 package model;
 
+import helper.Nhaplieu;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 public class DSCTPhieuNhapHang {
-    Scanner sc=new Scanner(System.in);
     private static final String TEN_FILE="ChiTietPhieuNhapHang.txt";
     private CTPhieuNhapHang[] chiTiet;
     private int n;
@@ -40,7 +40,7 @@ public class DSCTPhieuNhapHang {
         CTPhieuNhapHang x=new CTPhieuNhapHang();
         x.setMaPNH(maPNH);
         System.out.print("Nhap ma SP:");
-        x.setMaSP(sc.nextLine());
+        x.setMaSP(Nhaplieu.docDong());
         if(dssp.timTheoMa(x.getMaSP()) == null) {
             System.out.println("Khong ton tai san pham!");
             return false;
@@ -51,9 +51,9 @@ public class DSCTPhieuNhapHang {
             return false;
         }
         System.out.print("Nhap so luong nhap hang:");
-        x.setSoLuong(Integer.parseInt(sc.nextLine()));
+        x.setSoLuong(Integer.parseInt(Nhaplieu.docDong()));
         System.out.print("Nhap don gia ban:");
-        x.setDonGia(Double.parseDouble(sc.nextLine()));
+        x.setDonGia(Double.parseDouble(Nhaplieu.docDong()));
         x.setThanhTien(x.getSoLuong(),x.getDonGia());
         them(x);
         dssp.timTheoMa(x.getMaSP()).nhaphang(x.getSoLuong());
@@ -113,13 +113,13 @@ public class DSCTPhieuNhapHang {
         System.out.print("1.So Luong.\n2.Don gia.\nChon:");
         int chon;
         do{
-            int q=Integer.parseInt(sc.nextLine());
+            int q=Integer.parseInt(Nhaplieu.docDong());
             SanPham X= dssp.timTheoMa(maSP);
             switch(q){
                 case 1:
                     int soLuongCu=chiTiet[i].getSoLuong();
                     System.out.print("Nhap so luong moi:");
-                    chiTiet[i].setSoLuong(Integer.parseInt(sc.nextLine()));
+                    chiTiet[i].setSoLuong(Integer.parseInt(Nhaplieu.docDong()));
                     int soLuongMoi=chiTiet[i].getSoLuong();
                     int chenhLech=soLuongMoi-soLuongCu;
                     X.setsoLuong(X.getSoLuong()+chenhLech);
@@ -127,13 +127,13 @@ public class DSCTPhieuNhapHang {
                     break;
                 case 2:
                     System.out.print("Nhap don gia moi:");
-                    chiTiet[i].setDonGia(Double.parseDouble(sc.nextLine()));
+                    chiTiet[i].setDonGia(Double.parseDouble(Nhaplieu.docDong()));
                     chiTiet[i].setThanhTien(chiTiet[i].getSoLuong(), chiTiet[i].getDonGia());
                     break;
                 default:break;
             }
             System.out.print("Tiep tuc sua?( 1: Yes / 0: No )");
-            chon=Integer.parseInt(sc.nextLine());
+            chon=Integer.parseInt(Nhaplieu.docDong());
         }while(chon==1);
         System.out.println("Da sua thong tin thanh cong!");
         return true;

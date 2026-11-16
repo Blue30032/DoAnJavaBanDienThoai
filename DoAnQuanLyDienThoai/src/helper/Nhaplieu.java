@@ -5,6 +5,11 @@ public class Nhaplieu {
     private static final Scanner sc = new Scanner(System.in);
     //constructor
     private Nhaplieu(){}
+
+    // Doc mot dong duy nhat tu ban phim, dung chung cho toan bo chuong trinh
+    public static String docDong() {
+        return sc.nextLine().trim();
+    }
     public static String docChuoi(String nhan)
     {
         while(true)

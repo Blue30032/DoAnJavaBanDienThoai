@@ -1,10 +1,10 @@
 package model;
 
+import helper.Nhaplieu;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 public class PhieuNhapHang {
-    Scanner sc = new Scanner(System.in);
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private String maPNH;
     private String maNCC;
@@ -43,13 +43,13 @@ public class PhieuNhapHang {
     }
     public void nhap(){
         System.out.print("Nhap ma phieu nhap hang:");
-        maPNH=sc.nextLine();
+        maPNH=Nhaplieu.docDong();
         System.out.print("Nhap ma nha cung cap:");
-        maNCC=sc.nextLine();
+        maNCC=Nhaplieu.docDong();
         System.out.print("Nhap ma nhan vien:");
-        maNV=sc.nextLine();
+        maNV=Nhaplieu.docDong();
         System.out.println("Nhap ngay lap phieu");
-        ngayLap=LocalDate.parse(sc.nextLine(),dtf);
+        ngayLap=LocalDate.parse(Nhaplieu.docDong(),dtf);
     }
     
     //cac ham get/set

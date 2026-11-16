@@ -276,9 +276,8 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
         }
     }
     
-    //xuat thong tin
     // xuat thong tin
-    public void xuat() {
+    public void xuat(DSCTPhieuNhapHang dsctpnh) {
         System.out.println("\n========== DANH SACH PHIEU NHAP HANG ==========\n");
         // Xac dinh do rong cac cot
         int stt = 3;
@@ -291,28 +290,44 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
             maPNH = Math.max(maPNH, pnh[i].getMaPNH().length());
             maNCC = Math.max(maNCC, pnh[i].getMaNCC().length());
             maNV = Math.max(maNV, pnh[i].getMaNV().length());
-            ngayLap = Math.max(ngayLap,pnh[i].getNgayLap().format(dtf).length());
-            tongTien = Math.max(tongTien,String.valueOf(pnh[i].getTongTien()).length());
+            ngayLap = Math.max(
+                ngayLap,
+                pnh[i].getNgayLap().format(dtf).length()
+            );
+            tongTien = Math.max(
+                tongTien,
+                String.valueOf(pnh[i].getTongTien()).length()
+            );
             stt = Math.max(stt, String.valueOf(i + 1).length());
         }
-        // In tieu de cot
+        // In tieu de
         System.out.printf("%-" + (stt + 3) + "s", "STT");
         System.out.printf("%-" + (maPNH + 3) + "s", "MA PNH");
         System.out.printf("%-" + (maNCC + 3) + "s", "MA NCC");
         System.out.printf("%-" + (maNV + 3) + "s", "MA NV");
         System.out.printf("%-" + (ngayLap + 3) + "s", "NGAY LAP");
         System.out.printf("%s\n", "TONG TIEN");
-        // Tinh do dai duong ke
         int tong = stt + maPNH + maNCC + maNV + ngayLap + tongTien + 15;
         System.out.println("-".repeat(tong));
-        // In danh sach
+        // Xuat tung phieu
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + (stt + 3) + "s", i + 1);
             System.out.printf("%-" + (maPNH + 3) + "s", pnh[i].getMaPNH());
             System.out.printf("%-" + (maNCC + 3) + "s", pnh[i].getMaNCC());
             System.out.printf("%-" + (maNV + 3) + "s", pnh[i].getMaNV());
-            System.out.printf("%-" + (ngayLap + 3) + "s",pnh[i].getNgayLap().format(dtf));
+            System.out.printf(
+                "%-" + (ngayLap + 3) + "s",
+                pnh[i].getNgayLap().format(dtf)
+            );
             System.out.printf("%.2f\n", pnh[i].getTongTien());
+            // Tim va xuat chi tiet cua phieu hien tai
+            DSCTPhieuNhapHang dsct = dsctpnh.findPNH(pnh[i].getMaPNH());
+            if (dsct.getN() > 0) {
+                System.out.println();
+                System.out.println("    ----- CHI TIET PHIEU NHAP HANG -----");
+                dsct.xuatChiTiet();
+                System.out.println();
+            }
         }
         System.out.println("-".repeat(tong));
         System.out.println("Tong so phieu nhap hang: " + n);

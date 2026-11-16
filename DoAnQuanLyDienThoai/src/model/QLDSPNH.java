@@ -52,7 +52,7 @@ public class QLDSPNH extends QuanLy {
             chon=Integer.parseInt(sc.nextLine());
             switch(chon){
                 case 1:
-                    dspnh.xuat();
+                    dspnh.xuat(dsctpnh);
                     break;
                 case 2:
                     System.out.print("Nhap ma PNH:");
@@ -100,6 +100,7 @@ public class QLDSPNH extends QuanLy {
                 case 4:
                     System.out.print("Nhap ma phieu nhap hang muon xoa: ");
                     String maXoa=sc.nextLine();
+                    dsctpnh.xoa(maXoa,dssp);
                     dspnh.xoa(maXoa);
                     break;
                 case 5:
@@ -117,17 +118,17 @@ public class QLDSPNH extends QuanLy {
                 case 6:
                     System.out.print("Nhap ma nha cung cap: ");
                     String mancc=sc.nextLine();
-                    dspnh.findMaNCC(mancc).xuat();
+                    dspnh.findMaNCC(mancc).xuat(dsctpnh);
                     break;
                 case 7:
                     System.out.print("Nhap ma nhan vien: ");
                     String manv=sc.nextLine();
-                    dspnh.findMaNV(manv).xuat();
+                    dspnh.findMaNV(manv).xuat(dsctpnh);
                     break;
                 case 8:
                     System.out.print("Nhap ngay lap (dd/MM/yyyy): ");
                     LocalDate ngaylap = LocalDate.parse(sc.nextLine(), dtf);
-                    dspnh.findNgayLap(ngaylap).xuat();
+                    dspnh.findNgayLap(ngaylap).xuat(dsctpnh);
                     break;
                 case 9:
                     dspnh.thongkeNCC();

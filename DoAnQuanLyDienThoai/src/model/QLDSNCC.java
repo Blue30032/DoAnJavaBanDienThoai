@@ -1,11 +1,11 @@
 package model;
 
-import java.util.Scanner;
+import helper.Nhaplieu;
+
 public class QLDSNCC extends QuanLy {
     public void menu(){
         int chon;
-        Scanner sc = new Scanner(System.in);
-        do{
+            do{
             System.out.println("\n========== QUAN LY NHA CUNG CAP ==========");
             System.out.println("1. Xem danh sach nha cung cap");
             System.out.println("2. Them nha cung cap");
@@ -17,8 +17,7 @@ public class QLDSNCC extends QuanLy {
             System.out.println("8. Thong ke theo dia chi");
             System.out.println("0. Thoat");
             System.out.print("Chon: ");
-            chon=sc.nextInt();
-            sc.nextLine();
+            chon=Integer.parseInt(Nhaplieu.docDong());
             switch(chon){
                 case 1:
                     dsncc.xuat();
@@ -35,17 +34,17 @@ public class QLDSNCC extends QuanLy {
                     break;
                 case 3:
                     System.out.print("Nhap ma NCC muon sua: ");
-                    String maSua=sc.nextLine();
+                    String maSua=Nhaplieu.docDong();
                     dsncc.sua(maSua);
                     break;
                 case 4:
                     System.out.print("Nhap ma NCC muon xoa: ");
-                    String maXoa=sc.nextLine();
+                    String maXoa=Nhaplieu.docDong();
                     dsncc.xoa(maXoa);
                     break;
                 case 5:
                     System.out.print("Nhap ma NCC can tim: ");
-                    String maTim=sc.nextLine();
+                    String maTim=Nhaplieu.docDong();
                     NhaCungCap x=dsncc.findMaNCC(maTim);
                     if(x!=null){
                         System.out.println("Tim thay NCC:");
@@ -57,13 +56,13 @@ public class QLDSNCC extends QuanLy {
                     break;
                 case 6:
                     System.out.print("Nhap ten NCC can tim: ");
-                    String ten=sc.nextLine();
+                    String ten=Nhaplieu.docDong();
                     DSNhaCungCap dsNCCTen=dsncc.findTen(ten);
                     dsNCCTen.xuat();
                     break;
                 case 7:
                     System.out.print("Nhap dia chi can tim: ");
-                    String dc=sc.nextLine();
+                    String dc=Nhaplieu.docDong();
                     DSNhaCungCap dsDC=dsncc.findDiaChi(dc);
                     dsDC.xuat();
                     break;

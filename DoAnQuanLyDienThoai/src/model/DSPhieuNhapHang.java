@@ -1,5 +1,7 @@
 package model;
 
+import helper.Nhaplieu;
+
 import helper.IDanhSach;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,11 +9,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
-    Scanner sc= new Scanner(System.in);
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final String TEN_FILE="PhieuNhapHang.txt";
     private PhieuNhapHang[] pnh;
@@ -46,17 +46,17 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
     public boolean them(){
         PhieuNhapHang Y=new PhieuNhapHang();
         System.out.print("Nhap ma phieu nhap hang:");
-        Y.setMaPNH(sc.nextLine());
+        Y.setMaPNH(Nhaplieu.docDong());
         if(findMaPNH(Y.getMaPNH())!=null){
             System.out.println("Phieu nhap hang tren da ton tai!\nThem phieu khong thanh cong!");
             return false;
         }
         System.out.print("Nhap ma nhan vien");
-        Y.setMaNV(sc.nextLine());
+        Y.setMaNV(Nhaplieu.docDong());
         System.out.print("Nhap ma nha cung cap:");
-        Y.setMaNCC(sc.nextLine());
+        Y.setMaNCC(Nhaplieu.docDong());
         System.out.print("Nhap ngay lap phieu (dd/MM/yyyy):");
-        LocalDate ngay = LocalDate.parse(sc.nextLine(), dtf);
+        LocalDate ngay = LocalDate.parse(Nhaplieu.docDong(), dtf);
         Y.setNgayLap(ngay);
         them(Y);
         return true;
@@ -91,12 +91,11 @@ public class DSPhieuNhapHang implements IDanhSach<PhieuNhapHang>{
         System.out.println(pnh[i]);
         System.out.println("\nHay chon muc muon sua:");
         System.out.print("1.Ma Nha Cung Cap.\n2.Ma Nhan Vien.\n3.Ngay Lap Phieu.\n4.Chi Tiet Phieu Nhap Hang.\nChon:");
-        int q=sc.nextInt();
-        sc.nextLine();
+        int q=Integer.parseInt(Nhaplieu.docDong());
         switch(q){
-            case 1:System.out.print("Nhap Ma Nha Cung Cap Moi:");pnh[i].setMaNCC(sc.nextLine());break;
-            case 2:System.out.print("Nhap Ma Nhan Vien Moi:");pnh[i].setMaNV(sc.nextLine());break;
-            case 3:System.out.print("Nhap Ngay Lap Phieu Moi:");pnh[i].setNgayLap(LocalDate.parse(sc.nextLine(),dtf));break;                 
+            case 1:System.out.print("Nhap Ma Nha Cung Cap Moi:");pnh[i].setMaNCC(Nhaplieu.docDong());break;
+            case 2:System.out.print("Nhap Ma Nhan Vien Moi:");pnh[i].setMaNV(Nhaplieu.docDong());break;
+            case 3:System.out.print("Nhap Ngay Lap Phieu Moi:");pnh[i].setNgayLap(LocalDate.parse(Nhaplieu.docDong(),dtf));break;                 
             default:break;
         }
         System.out.println("Da sua thong tin thanh cong!");

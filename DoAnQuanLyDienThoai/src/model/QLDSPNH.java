@@ -80,6 +80,10 @@ public class QLDSPNH extends QuanLy {
                     LocalDate ngay=LocalDate.parse(Nhaplieu.docDong(), dtf);
                     System.out.print("Nhap so luong chi tiet PNH:");
                     int n=Integer.parseInt(Nhaplieu.docDong());
+                    while(n<1){
+                        System.out.println("So luong chi tiet phai >0!");
+                        n=Integer.parseInt(Nhaplieu.docDong());
+                    }
                     while(n>0){
                         if(dsctpnh.them(maPNH,dssp,dspnh)){
                             n--;

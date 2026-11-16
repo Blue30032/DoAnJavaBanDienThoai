@@ -76,6 +76,31 @@ public class DSCTPhieuNhapHang {
         System.out.println("Da xoa chi tiet yeu cau.");
         return true;
     }
+    public boolean xoa(String maPNH, DSSanPham dssp) {
+        boolean daXoa = false;
+        for (int i = n - 1; i >= 0; i--) {
+            if (chiTiet[i].getMaPNH().equals(maPNH)) {
+                // Hoan lai so luong san pham
+                SanPham sp = dssp.timTheoMa(chiTiet[i].getMaSP());
+                if (sp != null) {
+                    sp.setsoLuong(sp.getSoLuong() - chiTiet[i].getSoLuong());
+                }
+                // Xoa chi tiet tai vi tri i
+                for (int j = i; j < n - 1; j++) {
+                    chiTiet[j] = chiTiet[j + 1];
+                }
+                n--;
+                daXoa = true;
+            }
+        }
+        if (daXoa) {
+            chiTiet = Arrays.copyOf(chiTiet, n);
+            System.out.println("Da xoa tat ca chi tiet cua phieu nhap hang " + maPNH);
+            return true;
+        }
+        System.out.println("Khong tim thay phieu nhap hang " + maPNH);
+        return false;
+    }
     public boolean sua(String maPNH,String maSP,DSSanPham dssp){
         int i=IfindChiTiet(maPNH,maSP);
         if(i==-1){
@@ -250,6 +275,58 @@ public class DSCTPhieuNhapHang {
         }
         System.out.println("-".repeat(tong));
         System.out.println("Tong so chi tiet: " + n);
+    }
+    public void xuatChiTiet() {
+        int stt = 3;
+        int maSP = "MA SP".length();
+        int soLuong = "SO LUONG".length();
+        int donGia = "DON GIA".length();
+        int thanhTien = "THANH TIEN".length();
+        for (int i = 0; i < n; i++) {
+            maSP = Math.max(maSP, chiTiet[i].getMaSP().length());
+            soLuong = Math.max(
+                soLuong,
+                String.valueOf(chiTiet[i].getSoLuong()).length()
+            );
+            donGia = Math.max(
+                donGia,
+                String.format("%.2f", chiTiet[i].getDonGia()).length()
+            );
+            thanhTien = Math.max(
+                thanhTien,
+                String.format("%.2f", chiTiet[i].getThanhTien()).length()
+            );
+            stt = Math.max(stt, String.valueOf(i + 1).length());
+        }
+        // Tieu de
+        System.out.printf("%-7s", "STT");
+        System.out.printf("%-" + (maSP + 3) + "s", "MA SP");
+        System.out.printf("%-" + (soLuong + 3) + "s", "SO LUONG");
+        System.out.printf("%-" + (donGia + 3) + "s", "DON GIA");
+        System.out.printf("%s\n", "THANH TIEN");
+        int tong = 7 + maSP + soLuong + donGia + thanhTien + 12;
+        System.out.println("    " + "-".repeat(tong));
+        // Du lieu
+        for (int i = 0; i < n; i++) {
+            System.out.printf("%-7s", i + 1);
+            System.out.printf(
+                "%-" + (maSP + 3) + "s",
+                chiTiet[i].getMaSP()
+            );
+            System.out.printf(
+                "%-" + (soLuong + 3) + "s",
+                chiTiet[i].getSoLuong()
+            );
+            System.out.printf(
+                "%-" + (donGia + 3) + "s",
+                String.format("%.2f", chiTiet[i].getDonGia())
+            );
+            System.out.printf(
+                "%.2f\n",
+                chiTiet[i].getThanhTien()
+            );
+        }
+        System.out.println("    " + "-".repeat(tong));
     }
     public void docFile() {
         BufferedReader br = null;
